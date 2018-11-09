@@ -1,5 +1,5 @@
 {
-    "name": "yiisoft/yii2-app-basic",
+    "name": "Budżet domowy",
     "description": "Yii 2 Basic Project Template",
     "keywords": ["yii2", "framework", "basic", "project template"],
     "homepage": "http://www.yiiframework.com/",
@@ -24,7 +24,9 @@
         "kartik-v/yii2-grid": "dev-master",
         "kartik-v/yii2-widget-select2": "dev-master",
         "kartik-v/yii2-date-range": "dev-master",
-        "kartik-v/yii2-dynagrid": "@dev"
+        "kartik-v/yii2-dynagrid": "@dev",
+        "kartik-v/yii2-nav-x": "@dev",
+        "johnitvn/yii2-ajaxcrud": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

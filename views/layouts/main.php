@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use app\widgets\Alert;
@@ -9,6 +10,8 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use kartik\nav\NavX;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -27,52 +30,60 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
-    ]);
-    NavBar::end();
-    ?>
-
+    <div class="position-fixed w-100" style="z-index: 1080">
+        <div class="hover-nav sticky-top">
+            <div class="container-fluid">
+                <div class="align-items-stretch col-12 px-0">
+                    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                        <a class="navbar-brand" href="<?= Yii::$app->homeUrl ?>">
+                            <i class="fas fa-hand-holding-usd"></i>&nbsp;Budżet domowy
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                                aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse flex-row-reverse" id="navbarToggle">
+                            <?= Nav::widget([
+                                'options' => ['class' => 'navbar-nav navbar-right'],
+                                'items' => [
+                                    ['label' => '<i class="fas fa-user-plus d-xl-none">&nbsp;</i>Rejestracja', 'url' => false, 'encode' => false,
+                                        'linkOptions' => [
+                                            'class' => 'text-light loadAjaxContent',
+                                            'style' => 'cursor:pointer',
+                                            'value' => Url::to(['/site/signup']),
+                                            'icon' => '<i class="fas fa-sign"></i>',
+                                            'modaltitle' => 'Signup',
+                                            'data-toggle' => "collapse", 'data-target' => '.navbar-collapse.show',
+                                            'id' => 'main-signup'
+                                        ],
+                                        'visible' => Yii::$app->user->isGuest ? true : false
+                                    ],
+                                    ['label' => '<i class="fas fa-sign-in-alt d-xl-none">&nbsp;</i>Login', 'url' => false, 'encode' => false,
+                                        'linkOptions' => [
+                                            'id' => 'btn-login',
+                                            'class' => 'text-light loadAjaxContent',
+                                            'style' => 'cursor:pointer',
+                                            'value' => Url::to(['/site/login']),
+                                            'icon' => '<i class="fas fa-lock"></i>',
+                                            'modaltitle' => 'Login',
+                                            'data-toggle' => "collapse", 'data-target' => '.navbar-collapse.show'
+                                        ],
+                                        'visible' => Yii::$app->user->isGuest ? true : false
+                                    ],
+                                ]
+                            ]);
+                            ?>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
 </div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
-
 <?php $this->endBody() ?>
 </body>
 </html>

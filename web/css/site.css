@@ -1,3 +1,7 @@
+* {
+    padding: 0;
+    margin: 0;
+}
 html,
 body {
     height: 100%;
@@ -112,4 +116,9 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+
+.container-fluid {
+    padding: 0;
+    margin: 0;
 }
