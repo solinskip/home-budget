@@ -7,14 +7,13 @@
 use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-use kartik\nav\NavX;
 use yii\helpers\Url;
+use yii\bootstrap\Modal;
 
 AppAsset::register($this);
 ?>
+
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
@@ -36,7 +35,7 @@ AppAsset::register($this);
                 <div class="align-items-stretch col-12 px-0">
                     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
                         <a class="navbar-brand" href="<?= Yii::$app->homeUrl ?>">
-                            <i class="fas fa-hand-holding-usd"></i>&nbsp;Budżet domowy
+                            <i class="fas fa-home"></i>&nbsp<span class="font-weight-normal">Budżet domowy</span>
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
                                 aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,19 +45,19 @@ AppAsset::register($this);
                             <?= Nav::widget([
                                 'options' => ['class' => 'navbar-nav navbar-right'],
                                 'items' => [
-                                    ['label' => '<i class="fas fa-user-plus d-xl-none">&nbsp;</i>Rejestracja', 'url' => false, 'encode' => false,
+                                    ['label' => '<i class="fas fa-user-plus">&nbsp;</i>Rejestracja', 'url' => false, 'encode' => false,
                                         'linkOptions' => [
                                             'class' => 'text-light loadAjaxContent',
                                             'style' => 'cursor:pointer',
                                             'value' => Url::to(['/site/signup']),
                                             'icon' => '<i class="fas fa-sign"></i>',
-                                            'modaltitle' => 'Signup',
+                                            'modaltitle' => 'Rejestracja',
                                             'data-toggle' => "collapse", 'data-target' => '.navbar-collapse.show',
                                             'id' => 'main-signup'
                                         ],
                                         'visible' => Yii::$app->user->isGuest ? true : false
                                     ],
-                                    ['label' => '<i class="fas fa-sign-in-alt d-xl-none">&nbsp;</i>Login', 'url' => false, 'encode' => false,
+                                    ['label' => '<i class="fas fa-sign-in-alt">&nbsp;</i>Login', 'url' => false, 'encode' => false,
                                         'linkOptions' => [
                                             'id' => 'btn-login',
                                             'class' => 'text-light loadAjaxContent',
@@ -70,6 +69,13 @@ AppAsset::register($this);
                                         ],
                                         'visible' => Yii::$app->user->isGuest ? true : false
                                     ],
+                                    ['label' => '<i class="fas fa-sign-out-alt">&nbsp;</i>Wyloguj się', 'url' => ['/site/logout'], 'encode' => false,
+                                        'linkOptions' => [
+                                            'class' => 'text-light',
+                                            'data-method' => 'post'
+                                        ],
+                                        'visible' => Yii::$app->user->isGuest ? false : true
+                                    ],
                                 ]
                             ]);
                             ?>
@@ -80,8 +86,35 @@ AppAsset::register($this);
         </div>
     </div>
     <div class="container">
-        <?= Alert::widget() ?>
+        <!--Alerts Container-->
+        <div id="alerts" class="col-md-9 text-center"
+             style="position: fixed; top: 100px; z-index: 999; word-wrap:break-word">
+            <?= Alert::widget() ?>
+        </div>
+        <!--Alerts Container end-->
+
+        <!--Main content render-->
         <?= $content ?>
+        <!--Main content render end-->
+
+        <!-- Utilities -->
+        <?php Modal::begin([
+            'options' => [
+                'tabindex' => false,
+                'class' => 'py-5 my-5',
+                'style' => ''
+            ],
+            'header' => '<h4 id="modalHeaderTitle" class="text-light"></h4>',
+            'closeButton' => ['label' => '<i class="fas fa-window-close text-light"></i>', 'tag' => 'i'],
+            'headerOptions' => ['id' => 'modalHeader', 'class' => 'bg-dark', 'style' => 'display:block;'],
+            'id' => 'modalAjax',
+            'clientOptions' => ['backdrop' => 'static', 'keyboard' => false]
+        ]) ?>
+
+        <div class="modalAjaxContent"></div>
+
+        <?php Modal::end(); ?>
+        <!-- Utilities END-->
     </div>
 </div>
 <?php $this->endBody() ?>

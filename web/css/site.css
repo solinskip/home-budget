@@ -122,3 +122,14 @@ a.desc:after {
     padding: 0;
     margin: 0;
 }
+
+.modal-sub {
+    border: 1px solid #343a40;
+    color: #343a40;
+    background-color: #f8f9fa;
+}
+
+.modal-sub:hover {
+    background-color: #343a40;
+    color: #f8f9fa;
+}

@@ -22,6 +22,8 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+//            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+//            'loginUrl' => ['/', 'autologin' => true]
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -44,10 +46,20 @@ $config = [
         ],
         'db' => $db,
         'urlManager' => [
+            'class' => 'yii\web\urlManager',
             'enablePrettyUrl' => true,
 //            'showScriptName' => false,
-//            'rules' => [
-//            ],
+//            'baseUrl' => Yii::getAlias('index.php'),
+
+        ],
+    ],
+    'modules' => [
+        'gridview' =>  [
+            'class' => '\kartik\grid\Module',
+        ],
+        'dynagrid'=> [
+            'class'=>'\kartik\dynagrid\Module',
+            // other module settings
         ],
     ],
     'params' => $params,

@@ -7,8 +7,8 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
+use app\models\Signup;
+use app\models\Login;
 
 class SiteController extends Controller
 {
@@ -39,22 +39,6 @@ class SiteController extends Controller
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-        ];
-    }
-
-    /**
      * Displays homepage.
      *
      * @return string
@@ -62,6 +46,27 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    /**
+     * Creates a new Signup model.
+     * @return mixed
+     */
+    public function actionSignup()
+    {
+        $model = new Signup();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->signup()) {
+                Yii::$app->session->setFlash('success', 'Rejestracja przebiegła pomyślnie, teraz możesz się zalogować na swoje konto.');
+
+                return $this->redirect(Yii::$app->request->baseUrl . '/index.php' . '/site/index');
+            }
+        }
+
+        return $this->renderAjax('signup', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -75,18 +80,14 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $model = new LoginForm();
+        $model = new Login();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
 
-        $model->password = '';
-        return $this->render('login', [
+        return $this->renderAjax('login', [
             'model' => $model,
         ]);
-    }
-    public function actionSingup() {
-
     }
 
     /**
@@ -99,5 +100,24 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    /**
+     * @param $model
+     * @return array|bool
+     */
+    public function actionValidateForm($model)
+    {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if ($model) {
+            $model = new $model;
+            $model->load(Yii::$app->request->post());
+
+            return \kartik\form\ActiveForm::validate($model);
+        } else {
+
+            return false;
+        }
     }
 }
