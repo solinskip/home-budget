@@ -69,6 +69,12 @@ AppAsset::register($this);
                                         ],
                                         'visible' => Yii::$app->user->isGuest ? true : false
                                     ],
+                                    ['label' => '<i class="fas fa-file-contract"></i>&nbsp;</i>Wgraj plik', 'url' => ['transactions/index'], 'encode' => false,
+                                        'linkOptions' => [
+                                            'class' => 'text-light',
+                                        ],
+                                        'visible' => Yii::$app->user->isGuest ? false : true
+                                    ],
                                     ['label' => '<i class="fas fa-sign-out-alt">&nbsp;</i>Wyloguj się', 'url' => ['/site/logout'], 'encode' => false,
                                         'linkOptions' => [
                                             'class' => 'text-light',
@@ -87,8 +93,8 @@ AppAsset::register($this);
     </div>
     <div class="container">
         <!--Alerts Container-->
-        <div id="alerts" class="col-md-9 text-center"
-             style="position: fixed; top: 100px; z-index: 999; word-wrap:break-word">
+        <div id="alerts" class="text-center"
+             style="position: absolute; top: 225px; left: 50%; transform: translate(-50%, -50%); z-index: 999; word-wrap:break-word">
             <?= Alert::widget() ?>
         </div>
         <!--Alerts Container end-->
