@@ -32,7 +32,8 @@
     "kartik-v/yii2-dynagrid": "@dev",
     "kartik-v/yii2-nav-x": "@dev",
     "johnitvn/yii2-ajaxcrud": "*",
-    "kartik-v/yii2-widget-fileinput": "dev-master"
+    "kartik-v/yii2-widget-fileinput": "dev-master",
+    "kartik-v/yii2-money": "dev-master"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",

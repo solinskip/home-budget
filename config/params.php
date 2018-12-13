@@ -6,5 +6,14 @@ return [
         'bsVersion' => '4.x', // this will set globally `bsVersion` to Bootstrap 4.x for all Krajee Extensions
         // other settings
         // 'adminEmail' => 'admin@example.com'
+        'maskMoneyOptions' => [
+            'prefix' => '',
+            'suffix' => ' PLN',
+            'affixesStay' => true,
+            'thousands' => ' ',
+            'decimal' => ',',
+            'precision' => 2,
+            'allowNegative' => true,
+        ],
     ]
 ];

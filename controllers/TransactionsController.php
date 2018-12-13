@@ -7,6 +7,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use app\models\Transactions;
 use app\models\CsvImporter;
+use app\models\search\TransactionsSearch;
 
 class TransactionsController extends Controller
 {
@@ -30,6 +31,17 @@ class TransactionsController extends Controller
 
         return $this->render('index', [
             'model' => $model,
+        ]);
+    }
+
+    public function actionFinances()
+    {
+        $searchModel = new TransactionsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('finances', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

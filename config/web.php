@@ -52,6 +52,12 @@ $config = [
 //            'baseUrl' => Yii::getAlias('index.php'),
 
         ],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'locale' => 'pl',
+            'decimalSeparator' => ',',
+            'thousandSeparator' => ' ',
+        ],
     ],
     'modules' => [
         'gridview' =>  [
@@ -61,6 +67,19 @@ $config = [
             'class'=>'\kartik\dynagrid\Module',
             // other module settings
         ],
+    ],
+    'container' => [
+        'definitions' => [
+            yii\widgets\LinkPager::class => [
+                'firstPageLabel' => '<<',
+                'lastPageLabel' => '>>',
+                'nextPageLabel' => false,
+                'prevPageLabel' => false,
+                'activePageCssClass' => 'active-page',
+                'pageCssClass' => 'pagination',
+                'maxButtonCount' => 10
+            ]
+        ]
     ],
     'params' => $params,
 ];

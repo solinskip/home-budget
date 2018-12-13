@@ -75,6 +75,12 @@ AppAsset::register($this);
                                         ],
                                         'visible' => Yii::$app->user->isGuest ? false : true
                                     ],
+                                    ['label' => '<i class="fas fa-chart-line"></i>&nbsp;</i>Moje finanse', 'url' => ['transactions/finances'], 'encode' => false,
+                                        'linkOptions' => [
+                                            'class' => 'text-light',
+                                        ],
+                                        'visible' => Yii::$app->user->isGuest ? false : true
+                                    ],
                                     ['label' => '<i class="fas fa-sign-out-alt">&nbsp;</i>Wyloguj się', 'url' => ['/site/logout'], 'encode' => false,
                                         'linkOptions' => [
                                             'class' => 'text-light',

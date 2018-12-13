@@ -92,6 +92,28 @@ class Transactions extends ActiveRecord
         return $insertData;
     }
 
+    public function getColumns()
+    {
+        return [
+            ['class' => 'yii\grid\SerialColumn'],
+            'date',
+            'name_sender',
+            'name_recipient',
+            'transaction_detail',
+            [
+                'attribute' => 'amount',
+                'format' => 'raw',
+                'vAlign' => 'middle',
+                'hAlign' => 'center',
+                'value' => function ($model) {
+                    $class = $model->amount > 0 ? 'text-success' : 'text-danger';
+
+                    return '<div class="' . $class . '">' . Yii::$app->formatter->asDecimal( $model->amount) . ' zł</div>';
+                }
+            ],
+        ];
+    }
+
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'id_user']);
