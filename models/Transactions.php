@@ -134,7 +134,7 @@ class Transactions extends ActiveRecord
                 'template' => '{update} {delete}',
                 'buttons' => [
                     'update' => function ($url, $model) {
-                        return Html::a('<span class="fa fa-edit" style="color:#222d32;"></span>', $url, ['data-pjax' => 0, 'title' => 'Aktualizacja', 'data-toggle' => 'tooltip']);
+                        return Html::a('<span class="fa fa-edit" style="color:#222d32;"></span>', false, ['value' => Url::to(['update', 'id' => $model->id]), 'class' => 'loadAjaxContent', 'icon' => '<i class="fa fa-tasks"></i>', 'modaltitle' => 'Aktualizuj transakcje']);
                     },
                     'delete' => function ($url, $model) {
                         return Html::a('<span class="fas fa-trash-alt" style="color:#222d32;"></span>', $url, ['data-pjax' => 0, 'title' => 'Usuń',

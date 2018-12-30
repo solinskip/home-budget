@@ -83,6 +83,35 @@ class TransactionsController extends Controller
     }
 
     /**
+     * Update transaction
+     *
+     * @param $id integer
+     * @return string|Response
+     * @throws NotFoundHttpException
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                Yii::$app->session->setFlash('alert', [
+                    'type' => 'success',
+                    'title' => 'Informacja',
+                    'message' => 'Transakcja została zaktualizowana z powodzeniem',
+                    'options' => ['class' => 'alert-success']
+                ]);
+
+                return $this->redirect('finances');
+            }
+        }
+
+        return $this->renderAjax('_form', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
      * Display all transactions
      *
      * @return string
@@ -124,17 +153,15 @@ class TransactionsController extends Controller
      */
     public function actionDelete($id)
     {
-        $request = Yii::$app->request;
         $this->findModel($id)->delete();
 
-        if ($request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
-        } else {
-            /*
-            *   Process for non-ajax request
-            */
-            return $this->redirect(['finances']);
-        }
+        Yii::$app->session->setFlash('alert', [
+            'type' => 'success',
+            'title' => 'Informacja',
+            'message' => 'Transakcja została usunięta z powodzeniem',
+            'options' => ['class' => 'alert-success']
+        ]);
+
+        return $this->redirect(['finances']);
     }
 }
