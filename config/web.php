@@ -1,5 +1,7 @@
 <?php
 
+use kartik\datecontrol\Module;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -9,7 +11,7 @@ $config = [
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
         'request' => [
@@ -60,13 +62,32 @@ $config = [
         ],
     ],
     'modules' => [
-        'gridview' =>  [
+        'gridview' => [
             'class' => '\kartik\grid\Module',
         ],
-        'dynagrid'=> [
-            'class'=>'\kartik\dynagrid\Module',
+        'dynagrid' => [
+            'class' => '\kartik\dynagrid\Module',
             // other module settings
         ],
+        'datecontrol' => [
+            'class' => 'kartik\datecontrol\Module',
+            'displaySettings' => [
+                Module::FORMAT_DATE => 'php:d.m.Y',
+            ],
+            'saveSettings' => [
+                Module::FORMAT_DATE => 'php:Y-m-d',
+            ],
+            'autoWidget' => true,
+            'autoWidgetSettings' => [
+                Module::FORMAT_DATE => [
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'todayHighlight' => true,
+                        //'todayBtn' => true
+                    ]
+                ],
+            ],
+        ]
     ],
     'container' => [
         'definitions' => [

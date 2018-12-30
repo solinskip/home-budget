@@ -22,7 +22,7 @@ class TransactionsSearch extends Transactions
 
     public function search($params)
     {
-        $query = Transactions::find();
+        $query = Transactions::find()->orderBy('date desc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
