@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\Url;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "transactions".
@@ -54,6 +56,12 @@ class Transactions extends ActiveRecord
         ];
     }
 
+    /**
+     * Save transactions do database, return number od added records
+     *
+     * @param $data array
+     * @return int
+     */
     public function migrateToBase($data)
     {
         $i = 0;
@@ -92,6 +100,11 @@ class Transactions extends ActiveRecord
         return $insertData;
     }
 
+    /**
+     * Columns to finances dynagrid
+     *
+     * @return array
+     */
     public function getColumns()
     {
         return [
@@ -108,12 +121,40 @@ class Transactions extends ActiveRecord
                 'value' => function ($model) {
                     $class = $model->amount > 0 ? 'text-success' : 'text-danger';
 
-                    return '<div class="' . $class . '">' . Yii::$app->formatter->asDecimal( $model->amount) . ' zł</div>';
+                    return '<div class="' . $class . '">' . Yii::$app->formatter->asDecimal($model->amount) . ' zł</div>';
                 }
             ],
+            [
+                'class' => 'kartik\grid\ActionColumn',
+                'header' => 'Akcje',
+                'dropdown' => false,
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    return Url::to([$action, 'id' => $key]);
+                },
+                'template' => '{update} {delete}',
+                'buttons' => [
+                    'update' => function ($url, $model) {
+                        return Html::a('<span class="fa fa-edit" style="color:#222d32;"></span>', $url, ['data-pjax' => 0, 'title' => 'Aktualizacja', 'data-toggle' => 'tooltip']);
+                    },
+                    'delete' => function ($url, $model) {
+                        return Html::a('<span class="fas fa-trash-alt" style="color:#222d32;"></span>', $url, ['data-pjax' => 0, 'title' => 'Usuń',
+                            'data' => [
+                                'data-confirm' => false, 'data-method' => false, // for overide yii data api
+                                'method' => 'post',
+                            ]]);
+                    },
+                ],
+                'updateOptions' => ['title' => 'Aktualizacja', 'data-toggle' => 'tooltip'],
+                'vAlign' => 'middle',
+            ]
         ];
     }
 
+    /**
+     * Get user
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'id_user']);

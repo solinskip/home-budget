@@ -5,11 +5,12 @@
 /* @var $content string */
 
 use app\widgets\Alert;
-use yii\helpers\Html;
-use yii\bootstrap\Nav;
 use app\assets\AppAsset;
-use yii\helpers\Url;
+use yii\bootstrap\Nav;
 use yii\bootstrap\Modal;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use kartik\growl\Growl;
 
 AppAsset::register($this);
 ?>
@@ -103,6 +104,28 @@ AppAsset::register($this);
              style="position: absolute; top: 225px; left: 50%; transform: translate(-50%, -50%); z-index: 999; word-wrap:break-word">
             <?= Alert::widget() ?>
         </div>
+
+        <section class="content">
+            <?php foreach (Yii::$app->session->getAllFlashes() as $message): ?>
+                <?= Growl::widget([
+                    'id' => 'growl',
+                    'type' => (!empty($message['type'])) ? $message['type'] : 'danger',
+                    'title' => (!empty($message['title'])) ? Html::encode($message['title']) : null,
+                    'icon' => (!empty($message['icon'])) ? $message['icon'] : 'fa fa-info',
+                    'body' => (!empty($message['message'])) ? Html::encode($message['message']) : null,
+                    'showSeparator' => true,
+                    'delay' => 1, //This delay is how long before the message shows
+                    'pluginOptions' => [
+                        'delay' => (!empty($message['duration'])) ? $message['duration'] : 5000, //This delay is how long the message shows for
+                        'placement' => [
+                            'from' => (!empty($message['positonY'])) ? $message['positonY'] : 'top',
+                            'align' => (!empty($message['positonX'])) ? $message['positonX'] : 'right',
+                        ]
+                    ]
+                ]);
+                ?>
+            <?php endforeach; ?>
+        </section>
         <!--Alerts Container end-->
 
         <!--Main content render-->

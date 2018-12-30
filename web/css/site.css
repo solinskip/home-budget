@@ -128,6 +128,10 @@ a.desc:after {
     margin: 0;
 }
 
+#growl {
+    z-index: 9999 !important;
+}
+
 .modal-sub {
     border: 1px solid #343a40;
     color: #343a40;
@@ -200,4 +204,8 @@ li.pagination a:hover {
 
 li.first.disabled, li.last.disabled {
     display: none;
+}
+
+.help-block {
+    color: #dc3545;
 }
