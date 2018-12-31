@@ -16,17 +16,23 @@ class TransactionsSearch extends Transactions
     {
         return [
             [['id', 'id_user'], 'integer'],
-            [['date', 'name_sender', 'name_recipient', 'transaction_detail', 'amount', 'created_at'], 'safe'],
+            [['date', 'category_id', 'name_sender', 'name_recipient', 'transaction_detail', 'amount', 'created_at'], 'safe'],
         ];
     }
 
     public function search($params)
     {
-        $query = Transactions::find()->orderBy('date desc');
+        $query = Transactions::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['date' => SORT_DESC]]
         ]);
+
+        $dataProvider->sort->attributes['category_id'] = [
+            'asc' => ['category.name' => SORT_ASC],
+            'desc' => ['category.name' => SORT_DESC]
+        ];
 
         $this->load($params);
 
@@ -36,6 +42,9 @@ class TransactionsSearch extends Transactions
             return $dataProvider;
         }
 
+        /** Relations **/
+        $query->joinWith(['category']);
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -44,7 +53,8 @@ class TransactionsSearch extends Transactions
             'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name_sender', $this->name_sender])
+        $query->andFilterWhere(['like', 'category.name', $this->category_id])
+            ->andFilterWhere(['like', 'name_sender', $this->name_sender])
             ->andFilterWhere(['like', 'name_recipient', $this->name_recipient])
             ->andFilterWhere(['like', 'transaction_detail', $this->transaction_detail])
             ->andFilterWhere(['like', 'amount', $this->amount]);

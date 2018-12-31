@@ -82,6 +82,12 @@ AppAsset::register($this);
                                         ],
                                         'visible' => Yii::$app->user->isGuest ? false : true
                                     ],
+                                    ['label' => '<i class="fas fa-boxes"></i>&nbsp;</i>Kategorie', 'url' => ['category/index'], 'encode' => false,
+                                        'linkOptions' => [
+                                            'class' => 'text-light',
+                                        ],
+                                        'visible' => Yii::$app->user->isGuest ? false : true
+                                    ],
                                     ['label' => '<i class="fas fa-sign-out-alt">&nbsp;</i>Wyloguj się', 'url' => ['/site/logout'], 'encode' => false,
                                         'linkOptions' => [
                                             'class' => 'text-light',

@@ -12,12 +12,14 @@ use yii\helpers\Html;
  *
  * @property int $id
  * @property int $id_user
+ * @property int $category_id
  * @property string $date
  * @property string $name_sender
  * @property string $name_recipient
  * @property string $transaction_detail
  * @property double $amount
  *
+ * @property Category $category
  * @property User $user
  */
 class Transactions extends ActiveRecord
@@ -32,11 +34,12 @@ class Transactions extends ActiveRecord
     public function rules()
     {
         return [
-            [['id_user'], 'integer'],
+            [['id_user', 'category_id'], 'integer'],
             [['date', 'transaction_detail', 'amount'], 'required'],
             [['date'], 'safe'],
             [['amount'], 'number'],
             [['name_sender', 'name_recipient', 'transaction_detail'], 'string', 'max' => 255],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
             [['file'], 'file'],
         ];
@@ -47,6 +50,7 @@ class Transactions extends ActiveRecord
         return [
             'id' => 'ID',
             'id_user' => 'ID użytkownika',
+            'category_id' => 'ID kategorii',
             'date' => 'Data transakcji',
             'name_sender' => 'Nazwa nadawcy',
             'name_recipient' => 'Nazwa odbiorcy',
@@ -110,6 +114,11 @@ class Transactions extends ActiveRecord
         return [
             ['class' => 'yii\grid\SerialColumn'],
             'date',
+            [
+                'attribute' => 'category_id',
+                'label' => 'Kategoria',
+                'value' => 'category.name',
+            ],
             'name_sender',
             'name_recipient',
             'transaction_detail',
@@ -158,5 +167,13 @@ class Transactions extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'id_user']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategory()
+    {
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 }

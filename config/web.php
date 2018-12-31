@@ -59,6 +59,7 @@ $config = [
             'locale' => 'pl',
             'decimalSeparator' => ',',
             'thousandSeparator' => ' ',
+            'nullDisplay' => '',
         ],
     ],
     'modules' => [
