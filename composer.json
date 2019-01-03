@@ -37,7 +37,8 @@
     "kartik-v/yii2-widget-fileinput": "dev-master",
     "kartik-v/yii2-money": "dev-master",
     "kartik-v/yii2-widget-growl": "*",
-    "kartik-v/yii2-widgets": "*"
+    "kartik-v/yii2-widgets": "*",
+    "kartik-v/yii2-editable": "dev-master"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",

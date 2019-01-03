@@ -47,4 +47,24 @@ class Category extends \yii\db\ActiveRecord
             'description' => 'Description',
         ];
     }
+
+    /**
+     * List of transaction categories
+     *
+     * @return array
+     */
+    public function getCategories()
+    {
+        $categoryList = [];
+
+        $mainCategories = Category::find()->where(['parent' => 0])->all();
+        foreach ($mainCategories as $mainCategory) {
+            $subCategories = Category::find()->where(['parent' => $mainCategory->id])->all();
+            foreach ($subCategories as $subCategory) {
+                $categoryList[$mainCategory->name][$subCategory->id] = $subCategory->name;
+            }
+
+        }
+        return $categoryList;
+    }
 }

@@ -209,3 +209,17 @@ li.first.disabled, li.last.disabled {
 .help-block {
     color: #dc3545;
 }
+
+.popover-title {
+    font-size: 16px !important;
+    padding: 4px 0 4px 10px;
+}
+
+.popover-title > button {
+    padding-right: 10px;
+}
+
+.popover-content {
+    width: 98%;
+    margin: auto;
+}

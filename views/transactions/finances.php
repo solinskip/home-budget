@@ -9,8 +9,8 @@ CrudAsset::register($this);
 
 $this->title = 'Moje finanse';
 ?>
-<div class="transactions-index">
-    <div id="ajaxCrudDatatable">
+<div class="transactions-index row">
+    <div id="ajaxCrudDatatable col-md-12">
         <h1><?= Html::encode($this->title) ?></h1>
 
         <?= DynaGrid::widget([

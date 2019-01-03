@@ -2,7 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\Category;
 use Yii;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -89,10 +91,25 @@ class TransactionsController extends Controller
      * @return string|Response
      * @throws NotFoundHttpException
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id = null)
     {
-        $model = $this->findModel($id);
+        //update category via editable widget
+        if (is_null($id)) {
+            $data = Yii::$app->request->post();
+            $categoryId = current($data['Transactions'])['category_id'];
 
+            $model = Transactions::find()->where(['id' => $data['editableKey']])->one();
+            $categoryName = Category::find()->where(['id' => $categoryId])->one();
+
+            $model->category_id = $categoryId;
+            if ($model->save()) {
+
+                return Json::encode(['output' => $categoryName->name, 'message' => '']);
+            }
+        }
+
+        //update other case
+        $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
                 Yii::$app->session->setFlash('alert', [

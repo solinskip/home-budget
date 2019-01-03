@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f0cd4a8d04d3978817dc34352042720",
+    "content-hash": "3849c8c422cfe5c86e89021c3038f7f6",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -860,16 +860,16 @@
         },
         {
             "name": "kartik-v/yii2-editable",
-            "version": "v1.7.8",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-editable.git",
-                "reference": "dd80cff630d583e980641420fcf7044ee2df33de"
+                "reference": "2329429b44a6209d0a840e7ea00c14e6152c611e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-editable/zipball/dd80cff630d583e980641420fcf7044ee2df33de",
-                "reference": "dd80cff630d583e980641420fcf7044ee2df33de",
+                "url": "https://api.github.com/repos/kartik-v/yii2-editable/zipball/2329429b44a6209d0a840e7ea00c14e6152c611e",
+                "reference": "2329429b44a6209d0a840e7ea00c14e6152c611e",
                 "shasum": ""
             },
             "require": {
@@ -909,7 +909,7 @@
                 "popover-x",
                 "widget"
             ],
-            "time": "2018-10-03T07:02:33+00:00"
+            "time": "2018-11-05T10:59:51+00:00"
         },
         {
             "name": "kartik-v/yii2-grid",
@@ -5573,7 +5573,8 @@
         "kartik-v/yii2-dynagrid": 20,
         "kartik-v/yii2-nav-x": 20,
         "kartik-v/yii2-widget-fileinput": 20,
-        "kartik-v/yii2-money": 20
+        "kartik-v/yii2-money": 20,
+        "kartik-v/yii2-editable": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

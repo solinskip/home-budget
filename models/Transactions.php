@@ -6,6 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\Url;
 use yii\helpers\Html;
+use kartik\editable\Editable;
 
 /**
  * This is the model class for table "transactions".
@@ -61,7 +62,7 @@ class Transactions extends ActiveRecord
     }
 
     /**
-     * Save transactions do database, return number od added records
+     * Save transactions do database, return number of added records
      *
      * @param $data array
      * @return int
@@ -115,9 +116,31 @@ class Transactions extends ActiveRecord
             ['class' => 'yii\grid\SerialColumn'],
             'date',
             [
+                'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'category_id',
-                'label' => 'Kategoria',
                 'value' => 'category.name',
+                'width' => '300px',
+                'label' => 'Kategoria',
+                'editableOptions' => function () {
+                    return [
+                        'header' => 'kategorie',
+                        'size' => 'md',
+                        'submitButton' => ['icon' => '<i class="fas fa-check"></i>', 'class' => 'btn btn-primary', 'style' => 'margin-left: 5px; padding: 0 5px 0 5px; font-size: 15px'],
+                        'resetButton' => ['icon' => '<i class="fas fa-ban"></i>', 'class' => 'btn btn-danger', 'style' => 'margin-left: 10px; padding: 0 5px 0 5px; font-size: 15px'],
+                        'inputType' => Editable::INPUT_WIDGET,
+                        'formOptions' => ['action' => [Url::to('category/update')]],
+                        'widgetClass' => '\kartik\widgets\Select2',
+                        'options' => [
+                            'data' => Category::getCategories(),
+                            'options' => [
+                                'placeholder' => 'Wybierz kategorie...',
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                            ],
+                        ],
+                    ];
+                }
             ],
             'name_sender',
             'name_recipient',
