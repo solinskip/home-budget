@@ -145,6 +145,58 @@ class TransactionsController extends Controller
     }
 
     /**
+     * Bulk action to assign category for transactions
+     *
+     * @return string|Response
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionBulkAssignCategory()
+    {
+        $model = new Transactions(['scenario' => 'bulk-assign']);
+
+        if ($data = Yii::$app->request->post('Transactions')) {
+            if (!empty($data['transactionsId']) && !empty($data['category_id'])) {
+                $ids = explode(',', $data['transactionsId']);
+
+                $models = Transactions::find()->where(['id' => $ids])->all();
+
+                foreach ($models as $model) {
+                    if ($model->category_id != $data['category_id']) {
+                        $model->category_id = $data['category_id'];
+
+                        if (!$model->update()) {
+                            Yii::$app->session->setFlash('alert', [
+                                'type' => 'danger',
+                                'title' => 'Informacja',
+                                'message' => 'Błąd podczas przypisywania kategorrii',
+                                'options' => ['class' => 'alert-danger']
+                            ]);
+
+                            return $this->redirect('finances');
+                        }
+                    }
+                }
+
+                Yii::$app->session->setFlash('alert', [
+                    'type' => 'success',
+                    'title' => 'Informacja',
+                    'message' => 'Przypisanie kategorii przebiegło pomyślnie. Zaktualizowano ' . count($models) . ' transakcje',
+                    'options' => ['class' => 'alert-success']
+                ]);
+
+                return $this->redirect('finances');
+            } else {
+                return $this->redirect('finances');
+            }
+        }
+
+        return $this->renderAjax('_formCategory', [
+            'model' => $model
+        ]);
+    }
+
+    /**
      * Find model
      *
      * @param $id integer

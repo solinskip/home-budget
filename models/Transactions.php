@@ -25,7 +25,9 @@ use kartik\editable\Editable;
  */
 class Transactions extends ActiveRecord
 {
+    //virtual variables
     public $file;
+    public $transactionsId;
 
     public static function tableName()
     {
@@ -36,6 +38,7 @@ class Transactions extends ActiveRecord
     {
         return [
             [['id_user', 'category_id'], 'integer'],
+            [['category_id'], 'required', 'message' => '{attribute} nie może pozostać bez wartości', 'on' => 'bulk-assign'],
             [['date', 'transaction_detail', 'amount'], 'required'],
             [['date'], 'safe'],
             [['amount'], 'number'],
@@ -51,7 +54,7 @@ class Transactions extends ActiveRecord
         return [
             'id' => 'ID',
             'id_user' => 'ID użytkownika',
-            'category_id' => 'ID kategorii',
+            'category_id' => 'Kategoria',
             'date' => 'Data transakcji',
             'name_sender' => 'Nazwa nadawcy',
             'name_recipient' => 'Nazwa odbiorcy',
@@ -113,6 +116,20 @@ class Transactions extends ActiveRecord
     public function getColumns()
     {
         return [
+            [
+                'class' => 'kartik\grid\CheckboxColumn',
+                'width' => '20px',
+                'header' => Html::checkBox('selection_all', false, [
+                    'class' => 'select-on-check-all',
+                    'label' => '*',
+                ]),
+                'vAlign' => 'top',
+                'checkboxOptions' => function () {
+                    return [
+                        'class' => 'finances-checkbox',
+                    ];
+                },
+            ],
             ['class' => 'yii\grid\SerialColumn'],
             'date',
             [
@@ -128,7 +145,7 @@ class Transactions extends ActiveRecord
                         'submitButton' => ['icon' => '<i class="fas fa-check"></i>', 'class' => 'btn btn-primary', 'style' => 'margin-left: 5px; padding: 0 5px 0 5px; font-size: 15px'],
                         'resetButton' => ['icon' => '<i class="fas fa-ban"></i>', 'class' => 'btn btn-danger', 'style' => 'margin-left: 10px; padding: 0 5px 0 5px; font-size: 15px'],
                         'inputType' => Editable::INPUT_WIDGET,
-                        'formOptions' => ['action' => [Url::to('category/update')]],
+                        'formOptions' => ['action' => [Url::to('transactions/update')]],
                         'widgetClass' => '\kartik\widgets\Select2',
                         'options' => [
                             'data' => Category::getCategories(),
