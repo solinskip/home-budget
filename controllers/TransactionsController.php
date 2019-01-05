@@ -33,7 +33,7 @@ class TransactionsController extends Controller
      *
      * @return string|Response
      */
-    public function actionIndex()
+    public function actionUpload()
     {
         $model = new Transactions();
 
@@ -48,10 +48,10 @@ class TransactionsController extends Controller
             $seconds = round($executionEndTime - $executionStartTime, '2');
 
             Yii::$app->session->setFlash('success', "Dane zostały zaimportowane prawidłowo. Wykonanie skryptu zajęło {$seconds} sek. <br> Ilość dodanych rekordów: <strong>{$insertData}</strong>");
-            return $this->redirect(Yii::$app->request->baseUrl . '/index.php' . '/transactions/index');
+            return $this->redirect(Yii::$app->request->baseUrl . '/index.php' . '/transactions/upload');
         }
 
-        return $this->render('index', [
+        return $this->render('upload', [
             'model' => $model,
         ]);
     }
@@ -75,7 +75,7 @@ class TransactionsController extends Controller
                     'options' => ['class' => 'alert-success']
                 ]);
 
-                return $this->redirect('finances');
+                return $this->redirect('index');
             }
         }
 
@@ -119,7 +119,7 @@ class TransactionsController extends Controller
                     'options' => ['class' => 'alert-success']
                 ]);
 
-                return $this->redirect('finances');
+                return $this->redirect('index');
             }
         }
 
@@ -133,12 +133,12 @@ class TransactionsController extends Controller
      *
      * @return string
      */
-    public function actionFinances()
+    public function actionIndex()
     {
         $searchModel = new TransactionsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('finances', [
+        return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -173,7 +173,7 @@ class TransactionsController extends Controller
                                 'options' => ['class' => 'alert-danger']
                             ]);
 
-                            return $this->redirect('finances');
+                            return $this->redirect('index');
                         }
                     }
                 }
@@ -185,9 +185,9 @@ class TransactionsController extends Controller
                     'options' => ['class' => 'alert-success']
                 ]);
 
-                return $this->redirect('finances');
+                return $this->redirect('index');
             } else {
-                return $this->redirect('finances');
+                return $this->redirect('index');
             }
         }
 
@@ -231,6 +231,6 @@ class TransactionsController extends Controller
             'options' => ['class' => 'alert-success']
         ]);
 
-        return $this->redirect(['finances']);
+        return $this->redirect(['index']);
     }
 }

@@ -109,7 +109,7 @@ class Transactions extends ActiveRecord
     }
 
     /**
-     * Columns to finances dynagrid
+     * Columns to transactions dynagrid
      *
      * @return array
      */
@@ -126,7 +126,7 @@ class Transactions extends ActiveRecord
                 'vAlign' => 'top',
                 'checkboxOptions' => function () {
                     return [
-                        'class' => 'finances-checkbox',
+                        'class' => 'transactions-checkbox',
                     ];
                 },
             ],

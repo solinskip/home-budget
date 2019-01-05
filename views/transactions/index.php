@@ -1,29 +1,48 @@
 <?php
 
-use yii\bootstrap\Html;
-use kartik\form\ActiveForm;
-use kartik\file\FileInput;
+use yii\helpers\Html;
+use kartik\dynagrid\DynaGrid;
+use app\models\Transactions;
+use johnitvn\ajaxcrud\CrudAsset;
 
+CrudAsset::register($this);
+
+$this->title = 'Moje finanse';
 ?>
-<div class="row conversion-form">
-    <div class="col-sm-12 text-center">
-        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
+<div class="transactions-index row">
+    <div id="ajaxCrudDatatable col-md-12">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-        <?= $form->field($model, 'file')->widget(FileInput::classname(), [
-            'options' => ['accept' => 'file/*'],
-            'pluginOptions' => [
-                'allowedFileExtensions' => ['csv'],
-                'msgPlaceholder' => 'Wybierz plik...',
-                'browseLabel' => '<i class="fas fa-file-csv"></i> Wybierz plik',
-                'showUpload' => false,
-                'showCancel' => false,
-                'showClose' => false,
-                'showPreview' => false,
-                'showRemove' => false,
-            ]
-        ])->label(false); ?>
-
-        <?= Html::submitButton('Zapisz dane', ['class' => 'btn modal-sub']) ?>
-        <?php ActiveForm::end() ?>
+        <?= DynaGrid::widget([
+            'id' => 'crud-datatable',
+            'columns' => Transactions::getColumns(),
+            'options' => ['id' => 'transactions-grid'],
+            'gridOptions' => [
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'pjax' => false,
+                'striped' => true,
+                'condensed' => true,
+                'bordered' => false,
+                'responsive' => true,
+                'resizableColumns' => false,
+                'toggleDataContainer' => ['class' => 'btn-group'],
+                'toggleDataOptions' => [
+                    'all' => [
+                        'icon' => ' fas fa-expand-arrows-alt',
+                        'label' => '',
+                        'class' => 'btn btn-lg',
+                        'title' => 'Wyświetl wszystkie',
+                    ],
+                    'page' => [
+                        'icon' => 'fas fa-file',
+                        'label' => '',
+                        'class' => 'btn btn-lg',
+                        'title' => 'Wyświetl stronę',
+                    ],
+                ],
+                'panelTemplate' => $this->render('_panelTemplate'),
+            ],
+        ]); ?>
     </div>
 </div>
