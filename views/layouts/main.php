@@ -82,7 +82,7 @@ AppAsset::register($this);
                                         ],
                                         'visible' => Yii::$app->user->isGuest ? false : true
                                     ],
-                                    ['label' => '<i class="fas fa-boxes"></i>&nbsp;</i>Kategorie', 'url' => ['category/index'], 'encode' => false,
+                                    ['label' => '<i class="fas fa-sitemap"></i>&nbsp;</i>Kategorie', 'url' => ['category/index'], 'encode' => false,
                                         'linkOptions' => [
                                             'class' => 'text-light',
                                         ],

@@ -136,7 +136,9 @@ class Transactions extends ActiveRecord
                 'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'category_id',
                 'value' => 'category.name',
+                'visible' => isset(Yii::$app->request->get()['category']) ? false : true,
                 'width' => '300px',
+                'readonly' => isset(Yii::$app->request->get()['_toga9a4094b']) ? true : false,
                 'label' => 'Kategoria',
                 'editableOptions' => function () {
                     return [

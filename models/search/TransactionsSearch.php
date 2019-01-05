@@ -22,7 +22,11 @@ class TransactionsSearch extends Transactions
 
     public function search($params)
     {
-        $query = Transactions::find();
+        $query = Transactions::find()->where(['id_user' => Yii::$app->user->id]);
+
+        if (isset(Yii::$app->request->get()['category'])) {
+            $query->andWhere(['category_id' => null]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
