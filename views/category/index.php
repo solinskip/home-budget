@@ -2,18 +2,17 @@
 
 use yii\helpers\Html;
 use kartik\dynagrid\DynaGrid;
-use app\models\Transactions;
+use app\models\Category;
 
-$this->title = 'Moje finanse';
+$this->title = 'Kategorie finansów';
 ?>
-<div class="transactions-index row">
-    <div class="col-md-12">
+<div class="row">
+    <div class="category-list col-md-8">
         <h1><?= Html::encode($this->title) ?></h1>
 
         <?= DynaGrid::widget([
-            'id' => 'crud-datatable',
-            'columns' => Transactions::getColumns(),
-            'options' => ['id' => 'transactions-grid'],
+            'columns' => Category::getColumns(),
+            'options' => ['id' => 'category-grid'],
             'gridOptions' => [
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,

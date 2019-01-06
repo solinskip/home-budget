@@ -223,3 +223,8 @@ li.first.disabled, li.last.disabled {
     width: 98%;
     margin: auto;
 }
+
+.category-list {
+    flex: 100% !important;
+    max-width: 100% !important;
+}

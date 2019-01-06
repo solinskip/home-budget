@@ -29,13 +29,29 @@ class TransactionsController extends Controller
     }
 
     /**
+     * Display all transactions
+     *
+     * @return string
+     */
+    public function actionIndex()
+    {
+        $searchModel = new TransactionsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
      * Upload to database new transactions from .csv file
      *
      * @return string|Response
      */
     public function actionUpload()
     {
-        $model = new Transactions();
+        $model = new Transactions(['scenario' => 'upload']);
 
         if ($model->load(Yii::$app->request->post())) {
             $executionStartTime = microtime(true);
@@ -125,22 +141,6 @@ class TransactionsController extends Controller
 
         return $this->renderAjax('_form', [
             'model' => $model,
-        ]);
-    }
-
-    /**
-     * Display all transactions
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        $searchModel = new TransactionsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
         ]);
     }
 

@@ -38,7 +38,6 @@ class Transactions extends ActiveRecord
     {
         return [
             [['id_user', 'category_id'], 'integer'],
-            [['category_id'], 'required', 'message' => '{attribute} nie może pozostać bez wartości', 'on' => 'bulk-assign'],
             [['date', 'transaction_detail', 'amount'], 'required'],
             [['date'], 'safe'],
             [['amount'], 'number'],
@@ -46,6 +45,9 @@ class Transactions extends ActiveRecord
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
             [['file'], 'file'],
+
+            [['category_id'], 'required', 'message' => '{attribute} nie może pozostać bez wartości', 'on' => 'bulk-assign'],
+            [['file'], 'required', 'on' => 'upload'],
         ];
     }
 
