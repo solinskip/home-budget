@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -34,10 +35,14 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'parent', 'description'], 'required'],
+            [['name', 'parent'], 'required'],
             [['parent'], 'integer'],
-            [['name', 'description', 'word_category'], 'string', 'max' => 255],
+            [['name', 'category', 'subcategory', 'description', 'word_category'], 'string', 'max' => 255],
             [['name', 'word_category'], 'unique'],
+
+            //scenarios
+            [['category'], 'required', 'on' => 'category'],
+            [['category', 'subcategory'], 'required', 'on' => 'subcategory'],
         ];
     }
 
@@ -51,7 +56,10 @@ class Category extends \yii\db\ActiveRecord
             'name' => 'Nazwa',
             'parent' => 'Kategoria główna',
             'description' => 'Opis',
-            'word_category' => 'Słowa filtrujące'
+            'word_category' => 'Słowa filtrujące',
+            //virtual labels
+            'category' => 'Kategoria',
+            'subcategory' => 'Podkategoria'
         ];
     }
 
@@ -90,10 +98,10 @@ class Category extends \yii\db\ActiveRecord
                 'template' => '{update} {delete}',
                 'buttons' => [
                     'update' => function ($url, $model) {
-                        return Html::a('<span class="fa fa-edit" style="color:#222d32;"></span>', false, ['value' => Url::to(['update', 'id' => $model->id]), 'class' => 'loadAjaxContent', 'style' => 'cursor: pointer', 'icon' => '<i class="fa fa-tasks"></i>', 'modaltitle' => 'Aktualizuj transakcje']);
+                        return Html::a('<span class="fa fa-edit" style="color:#222d32;"></span>', false, ['value' => Url::to(['update', 'id' => $model->id, 'type' => ($model->parent == '0' ? 'category' : 'subcategory')]), 'class' => 'loadAjaxContent', 'style' => 'cursor: pointer', 'icon' => '<i class="fa fa-tasks"></i>', 'modaltitle' => 'Aktualizuj transakcje']);
                     },
                     'delete' => function ($url, $model) {
-                        return Html::a('<span class="fas fa-trash-alt" style="color:#222d32;"></span>', $url, ['data-pjax' => 0, 'title' => 'Usuń',
+                        return Html::a('<span class="fas fa-trash-alt" style="color:#222d32;"></span>', Url::to(['delete', 'id' => $model->id, 'type' => ($model->parent == '0' ? 'category' : 'subcategory')]), ['data-pjax' => 0, 'title' => 'Usuń',
                             'data' => [
                                 'data-confirm' => false, 'data-method' => false, // for overide yii data api
                                 'method' => 'post',
@@ -107,15 +115,21 @@ class Category extends \yii\db\ActiveRecord
     }
 
     /**
-     * List of transaction categories
+     * List of transaction categories. Depends of argument(true,false),
+     * return only main categories or categories with subcategories
      *
+     * @param bool $withSubcategories
      * @return array
      */
-    public function getCategories()
+    public function getCategories($withSubcategories = true)
     {
         $categoryList = [];
 
         $mainCategories = Category::find()->where(['parent' => 0])->all();
+        if ($withSubcategories === false) {
+            return ArrayHelper::map($mainCategories, 'id', 'name');
+        }
+
         foreach ($mainCategories as $mainCategory) {
             $subCategories = Category::find()->where(['parent' => $mainCategory->id])->all();
             foreach ($subCategories as $subCategory) {

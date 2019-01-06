@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\VerbFilter;
+use app\models\Category;
 use app\models\search\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -44,56 +45,118 @@ class CategoryController extends Controller
     }
 
     /**
-     * Displays a single Category model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * Create category or subcategory depends of argument
+     *
+     * @param $type string (category or subcategory)
+     * @return string|\yii\web\Response
      */
-    public function actionView($id)
-    {
-
-    }
-
-    /**
-     * Creates a new Category model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
+    public function actionCreate($type)
     {
         $model = new Category();
+        $type === 'category' ? $model->scenario = 'category' : $model->scenario = 'subcategory';
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if (Yii::$app->request->get()['type'] === 'category') {
+                $model->name = $model->category;
+                $model->parent = '0';
+            } else {
+                $model->name = $model->subcategory;
+                $model->parent = $model->category;
+            }
+
+            if ($model->save()) {
+                Yii::$app->session->setFlash('alert', [
+                    'type' => 'success',
+                    'title' => 'Informacja',
+                    'message' => (Yii::$app->request->get()['type'] === 'category' ? 'Kategoria' : 'Podkategoria') . ' została dodana z powodzeniem',
+                    'options' => ['class' => 'alert-success']
+                ]);
+
+                return $this->redirect('index');
+            }
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
+            'model' => $model,
+        ]);
+    }
+
+
+    /**
+     * Updates an existing Category model.
+     * Depends of argument type assign value
+     *
+     * @param $id integer
+     * @param $type string(category or subcategory)
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionUpdate($id, $type)
+    {
+        $model = $this->findModel($id);
+
+        if ($type === 'category') {
+            $model->scenario = 'category';
+            $model->category = $model->name;
+        } else {
+            $model->scenario = 'subcategory';
+            $model->category = $model->parent;
+            $model->subcategory = $model->name;
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            if (Yii::$app->request->get()['type'] === 'category') {
+                $model->name = $model->category;
+                $model->parent = '0';
+            } else {
+                $model->name = $model->subcategory;
+                $model->parent = $model->category;
+            }
+
+            if ($model->update()) {
+                Yii::$app->session->setFlash('alert', [
+                    'type' => 'success',
+                    'title' => 'Informacja',
+                    'message' => (Yii::$app->request->get()['type'] === 'category' ? 'Kategoria' : 'Podkategoria') . ' została zaktualizowana z powodzeniem',
+                    'options' => ['class' => 'alert-success']
+                ]);
+
+                return $this->redirect('index');
+            }
+        }
+
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing Category model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * Deletes an existing Category model
+     *
+     * @param $id integer
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
-    public function actionUpdate($id = null)
+    public function actionDelete($id, $type)
     {
+        $model = $this->findModel($id);
 
-    }
+        if ($type === 'category') {
+            Category::deleteAll(['parent' => $model->id]);
+        }
 
-    /**
-     * Deletes an existing Category model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+        $model->delete();
+
+        Yii::$app->session->setFlash('alert', [
+            'type' => 'success',
+            'title' => 'Informacja',
+            'message' => (Yii::$app->request->get()['type'] === 'category' ? 'Kategoria wraz z podkategoriami' : 'Podkategoria') . ' została usunięta z powodzeniem',
+            'options' => ['class' => 'alert-success']
+        ]);
 
         return $this->redirect(['index']);
     }
