@@ -204,6 +204,47 @@ class Transactions extends ActiveRecord
     }
 
     /**
+     * Total expenses divided into categories or subcategories depending on the category argument
+     * Return positive or negative amount depending on the positive argument
+     * Category type:
+     *      0 = main category
+     *      0 < subcategories
+     *
+     * @param $category integer
+     * @param bool $positive
+     * @return float
+     */
+    public function expensesCategories($category, $positive = true)
+    {
+        $modelCategory = Category::findOne($category);
+
+        if ($modelCategory->parent === 0) {
+            $subcategoriesIds = [];
+            $modelSubcategories = Category::find()->select('id')->where(['parent' => $category])->all();
+
+            foreach ($modelSubcategories as $modelSubcategory) {
+                array_push($subcategoriesIds, $modelSubcategory->id);
+            }
+
+            $category = $subcategoriesIds;
+        }
+
+        $amount = Transactions::find()->where(['>=', 'date', date('o-n-01')])->andWhere(['category_id' => $category])->andWhere(['id_user' => Yii::$app->user->id]);
+        $amount = round($amount->sum('amount'), 2);
+
+        return $positive === true ? abs($amount) : $amount;
+    }
+
+    /**
+     * Monthly expenses actual user
+     *
+     * @return float|int
+     */
+    public function monthlyExpenses() {
+        return abs(round(Transactions::find()->where(['>=', 'date', date('o-n-01')])->sum('amount'), 2));
+    }
+
+    /**
      * Get user
      *
      * @return \yii\db\ActiveQuery

@@ -4,7 +4,8 @@ use yii\helpers\Html;
 use kartik\dynagrid\DynaGrid;
 use app\models\Transactions;
 
-$this->title = 'Moje finanse';
+$this->title = 'Lista transakcji';
+
 ?>
 <div class="transactions-index row">
     <div class="col-md-12">

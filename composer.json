@@ -24,6 +24,7 @@
     "yiisoft/yii2-bootstrap": "~2.1.0@dev",
     "bower-asset/bootstrap": "~4.0.0@alpha",
     "yiisoft/yii2-swiftmailer": "~2.0.0",
+    "kartik-v/yii2-krajee-base": "*",
     "kartik-v/yii2-widget-activeform": "dev-master",
     "kartik-v/yii2-widget-spinner": "dev-master",
     "kartik-v/yii2-grid": "dev-master",
@@ -38,7 +39,8 @@
     "kartik-v/yii2-money": "dev-master",
     "kartik-v/yii2-widget-growl": "*",
     "kartik-v/yii2-widgets": "*",
-    "kartik-v/yii2-editable": "dev-master"
+    "kartik-v/yii2-editable": "dev-master",
+    "kartik-v/yii2-detail-view": "dev-master"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",

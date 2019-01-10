@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\Signup;
 use app\models\Login;
+use app\models\search\CategorySearch;
 
 class SiteController extends Controller
 {
@@ -39,13 +40,18 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * Displays homepage with statistic transactions
      *
      * @return string
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new CategorySearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider
+        ]);
     }
 
     /**

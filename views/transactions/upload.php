@@ -4,9 +4,13 @@ use yii\bootstrap\Html;
 use kartik\form\ActiveForm;
 use kartik\file\FileInput;
 
+$this->title = 'Wgraj pliki';
+
 ?>
 <div class="row conversion-form">
-    <div class="col-sm-12 text-center">
+    <div class="col-sm-12">
+        <h1>Prześlij dane</h1>
+        <p>Wybierz plik z transakcjami do wgrania na serwer, przyjmowane rozszerzenie pliku to <span class="badge badge-warning">.csv</span></p>
         <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 
         <?= $form->field($model, 'file')->widget(FileInput::classname(), [
@@ -23,7 +27,10 @@ use kartik\file\FileInput;
             ]
         ])->label(false); ?>
 
-        <?= Html::submitButton('Zapisz dane', ['class' => 'btn modal-sub']) ?>
+        <div class="text-center">
+            <?= Html::submitButton('Wgraj dane', ['class' => 'btn modal-sub']) ?>
+        </div>
+
         <?php ActiveForm::end() ?>
     </div>
 </div>

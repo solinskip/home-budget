@@ -228,3 +228,46 @@ li.first.disabled, li.last.disabled {
     flex: 100% !important;
     max-width: 100% !important;
 }
+
+h1 {
+    margin-left: -10px !important;
+}
+
+.month-statistic-grid table {
+    background-color: #16a085;
+    color: #fff;
+}
+
+.month-statistic-grid table thead {
+    display: none;
+}
+
+.month-statistic-grid table td {
+    margin-top: -10px !important;
+    padding: 5px 15px 8px 15px;
+    border: none;
+    border-top: 1px solid #ffffff;
+    line-height: 33px;
+}
+
+.subcategories-expand-grid table {
+    background-color: #16a085 !important;
+    color: #fff;
+}
+
+.subcategories-expand-grid table tr td {
+    border: none;
+}
+
+.subcategories-expand-grid table {
+    margin: 0;
+}
+
+.subcategories-expand-grid table td {
+    padding: 1px;
+    line-height: 28px !important;
+}
+
+.kv-expand-detail-row {
+    border-top: 2px solid #16a085 !important;
+}

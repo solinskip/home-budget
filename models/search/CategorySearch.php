@@ -2,6 +2,7 @@
 
 namespace app\models\search;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Category;
@@ -45,17 +46,24 @@ class CategorySearch extends Category
      */
     public function search($params)
     {
-        //get all subcategories without main categories
-        $categories = Category::find()->select(['parent'])->where(['<>', 'parent', '0'])->groupBy('parent')->asArray()->all();
+        $query = Category::find();
 
-        //create query for first category with subcategories
-        $query = Category::find()->where(['or', ['id' => $categories['0']['parent']], ['parent' => $categories['0']['parent']]])->orderBy('parent, name');
+        if (Yii::$app->controller->id == 'site') {
+            //get only main categories
+            $query->where(['parent' => '0']);
+        } elseif (Yii::$app->controller->action->id == 'index') {
+            //get all subcategories without main categories
+            $categories = Category::find()->select(['parent'])->where(['<>', 'parent', '0'])->groupBy('parent')->asArray()->all();
 
-        //union categories with proper sorting, first category then its subcategories
-        foreach ($categories as $category) {
-            $query1 = Category::find()->where(['or', ['id' => $category['parent']], ['parent' => $category['parent']]])->orderBy('parent, name');
-            $query = $query->union($query1);
-            unset($categories['0']);
+            //create query for first category with subcategories
+            $query->where(['or', ['id' => $categories['0']['parent']], ['parent' => $categories['0']['parent']]])->orderBy('parent, name');
+
+            //union categories with proper sorting, first category then its subcategories
+            foreach ($categories as $category) {
+                $query1 = Category::find()->where(['or', ['id' => $category['parent']], ['parent' => $category['parent']]])->orderBy('parent, name');
+                $query = $query->union($query1);
+                unset($categories['0']);
+            }
         }
 
         $dataProvider = new ActiveDataProvider([

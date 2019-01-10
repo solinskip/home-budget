@@ -76,7 +76,7 @@ AppAsset::register($this);
                                         ],
                                         'visible' => Yii::$app->user->isGuest ? false : true
                                     ],
-                                    ['label' => '<i class="fas fa-chart-line"></i>&nbsp;</i>Moje finanse', 'url' => ['transactions/index'], 'encode' => false,
+                                    ['label' => '<i class="fas fa-chart-line"></i>&nbsp;</i>Transakcje', 'url' => ['transactions/index'], 'encode' => false,
                                         'linkOptions' => [
                                             'class' => 'text-light',
                                         ],
