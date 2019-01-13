@@ -60,9 +60,28 @@ class User extends ActiveRecord implements IdentityInterface
             'created_at' => 'Utworzony',
             'updated_at' => 'Ostatnia modyfikacja',
             'logged_at' => 'Ostatnie logowanie',
+            'last_upload' => 'Ostatnie wgranie danych'
         ];
     }
 
+    /**
+     * Get last upload date
+     *
+     * @return false|string
+     */
+    public function lastUpload()
+    {
+        $user = self::findByUsername(Yii::$app->user->identity->username);
+
+        return $user->last_upload != null ? date('d-m-Y', $user->last_upload) : 'brak danych';
+    }
+
+    /**
+     * FInd user by username
+     *
+     * @param $username
+     * @return User|null
+     */
     public static function findByUsername($username) {
         return static::findOne(['username' => $username]);
     }

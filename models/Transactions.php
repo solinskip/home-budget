@@ -241,7 +241,7 @@ class Transactions extends ActiveRecord
      * @return float|int
      */
     public function monthlyExpenses() {
-        return abs(round(Transactions::find()->where(['>=', 'date', date('o-n-01')])->sum('amount'), 2));
+        return abs(round(Transactions::find()->where(['id_user' => Yii::$app->user->id])->andWhere(['>=', 'date', date('o-n-01')])->sum('amount'), 2));
     }
 
     /**

@@ -2,14 +2,15 @@
 
 namespace app\controllers;
 
-use app\models\Category;
 use Yii;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\filters\VerbFilter;
+use app\models\User;
 use app\models\Transactions;
+use app\models\Category;
 use app\models\CsvImporter;
 use app\models\search\TransactionsSearch;
 
@@ -59,6 +60,10 @@ class TransactionsController extends Controller
             $importer = new CsvImporter($_FILES['Transactions']['tmp_name']['file'], false, ';');
             $data = $importer->get();
             $insertData = $model->migrateToBase($data);
+
+            $user = User::findByUsername(Yii::$app->user->identity->username);
+            $user->last_upload = time();
+            $user->save();
 
             $executionEndTime = microtime(true);
             $seconds = round($executionEndTime - $executionStartTime, '2');
