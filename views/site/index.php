@@ -5,7 +5,7 @@ use kartik\dynagrid\DynaGrid;
 use kartik\grid\GridView;
 use app\models\Transactions;
 
-$this->title = '';
+$this->title = 'Miesięczne zestawienie statystyk';
 
 ?>
 <div class="site-index row">
@@ -13,7 +13,6 @@ $this->title = '';
         <?php if (!Yii::$app->user->isGuest) : ?>
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <!--                <div class="display-4"><? //= 'Witaj ' . Yii::$app->user->identity->username ?></div>-->
                     <div class="display-4">Zestawienie miesięcznych statystyk</div>
                 </div>
             </div>
@@ -77,7 +76,7 @@ $this->title = '';
                 </div>
             </div>
         <?php else : ?>
-            <div class="display-4 text-center">Witaj w aplikacji <span class="text-info" ">Budżet domowy</span></div>
+            <div class="display-4 text-center">Witaj w aplikacji <span class="text-secondary" style="font-weight: 400">Budżet domowy</span></div>
             <div class="text-center display-4 mt-4" style="font-size: 35px">Aby zaczać korzystać z aplikacji <span class="badge badge-success">zaloguj się</span> lub <span class="badge badge-info">zarejestruj</span></div>
         <?php endif; ?>
     </div>

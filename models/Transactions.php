@@ -77,6 +77,7 @@ class Transactions extends ActiveRecord
         $i = 0;
         $insertData = 0;
         $userId = Yii::$app->user->id;
+        $wordCategories = Category::getWordCategories();
 
         foreach ($data as $item) {
             if ($i >= 2) {
@@ -94,7 +95,8 @@ class Transactions extends ActiveRecord
 
                 if (empty($query)) {
                     $model = new Transactions();
-                    $model->id_user = Yii::$app->user->id;
+                    $model->id_user = $userId;
+                    $model->category_id = $this->in_array_stripos($item[4], $wordCategories);
                     $model->date = $date[2] . '-' . $date[1] . '-' . $date[0];
                     $model->name_sender = $item[2];
                     $model->name_recipient = $item[3];
@@ -107,7 +109,29 @@ class Transactions extends ActiveRecord
             $i++;
         }
 
+        //set new update date
+        $user = User::findByUsername(Yii::$app->user->identity->username);
+        $user->last_upload = time();
+        $user->save();
+
         return $insertData;
+    }
+
+    /**
+     * Checking if in sentence occurs word from array
+     *
+     * @param string $word
+     * @param $array
+     * @return |null
+     */
+    public function in_array_stripos($word, $array)
+    {
+        foreach ($array as $key => $value) {
+            if (is_int(stripos($word, $key))) {
+                return $value;
+            }
+        }
+        return null;
     }
 
     /**
@@ -240,7 +264,8 @@ class Transactions extends ActiveRecord
      *
      * @return float|int
      */
-    public function monthlyExpenses() {
+    public function monthlyExpenses()
+    {
         return abs(round(Transactions::find()->where(['id_user' => Yii::$app->user->id])->andWhere(['>=', 'date', date('o-n-01')])->sum('amount'), 2));
     }
 

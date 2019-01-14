@@ -61,10 +61,6 @@ class TransactionsController extends Controller
             $data = $importer->get();
             $insertData = $model->migrateToBase($data);
 
-            $user = User::findByUsername(Yii::$app->user->identity->username);
-            $user->last_upload = time();
-            $user->save();
-
             $executionEndTime = microtime(true);
             $seconds = round($executionEndTime - $executionStartTime, '2');
 

@@ -139,4 +139,23 @@ class Category extends \yii\db\ActiveRecord
         }
         return $categoryList;
     }
+
+    /**
+     * Return array with all word categories
+     * As a key assigned is word category, as a value assigned is category id
+     *
+     * @return array
+     */
+    public static function getWordCategories()
+    {
+        $models = Category::find()->where(['IS NOT', 'word_category', null ])->all();
+        $wordsCategories = [];
+
+        foreach ($models as $model) {
+            $wordCategories = explode(',', $model->word_category);
+            $wordsCategories = array_merge($wordsCategories, array_fill_keys($wordCategories, $model->id));
+        }
+
+        return $wordsCategories;
+    }
 }
