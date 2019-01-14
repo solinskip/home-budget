@@ -278,3 +278,17 @@ h1 {
     font-weight: 500;
     line-height: 1.2;
 }
+
+.group-odd {
+    background-color: #616366;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.group-even {
+    background-color: #919396;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 500;
+}

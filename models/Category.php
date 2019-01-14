@@ -5,6 +5,7 @@ namespace app\models;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use kartik\grid\GridView;
 
 /**
  * This is the model class for table "category".
@@ -71,20 +72,41 @@ class Category extends \yii\db\ActiveRecord
     public function getColumns()
     {
         return [
-            ['class' => 'yii\grid\SerialColumn'],
             [
                 'attribute' => 'category',
                 'label' => 'Kategoria',
                 'value' => function ($model) {
-                    return $model->parent === 0 ? $model->name : '';
-                }
+                    if ($model->parent !== 0) {
+                        $category = Category::findOne($model->parent);
+                    }
+                    return isset($category) ? $category->name : '';
+                },
+                'vAlign' => 'middle',
+                'hAlign' => 'center',
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => ArrayHelper::map(Category::find()->where(['parent' => 0])->orderBy('name')->asArray()->all(), 'name', 'name'),
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => ['placeholder' => 'Kategoria'],
+                'width' => '180px',
+                'groupOddCssClass' => 'group-odd',
+                'groupEvenCssClass' => 'group-even',
+                'group' => true,  // enable grouping
             ],
             [
                 'attribute' => 'subcategory',
                 'label' => 'Podkategoria',
                 'value' => function ($model) {
                     return $model->parent !== 0 ? $model->name : '';
-                }
+                },
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => ArrayHelper::map(Category::find()->where(['<>', 'parent', 0])->orderBy('name')->asArray()->all(), 'name', 'name'),
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => ['placeholder' => 'Subkategoria'],
+                'width' => '180px',
             ],
             'description',
             'word_category',
@@ -148,7 +170,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public static function getWordCategories()
     {
-        $models = Category::find()->where(['IS NOT', 'word_category', null ])->all();
+        $models = Category::find()->where(['IS NOT', 'word_category', null])->all();
         $wordsCategories = [];
 
         foreach ($models as $model) {
