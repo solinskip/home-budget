@@ -278,6 +278,20 @@ class Transactions extends ActiveRecord
     }
 
     /**
+     * Daily expenses current logged user
+     * If daily expenses equals > 0 return total expenses, else return 0
+     *
+     * @param $date string(Y-m-d)
+     * @return int|mixed
+     */
+    public function dailyExpenses($date)
+    {
+        $dailyExpenses = Transactions::find()->where(['id_user' => Yii::$app->user->id])->andWhere(['date' => $date])->sum('amount');
+
+        return $dailyExpenses ? $dailyExpenses * (-1) : 0;
+    }
+
+    /**
      * Monthly expenses actual user
      *
      * @return float|int
@@ -285,6 +299,24 @@ class Transactions extends ActiveRecord
     public function monthlyExpenses()
     {
         return abs(round(Transactions::find()->where(['id_user' => Yii::$app->user->id])->andWhere(['>=', 'date', date('o-n-01')])->sum('amount'), 2));
+    }
+
+    /**
+     * Monthly expenses divided into days
+     *
+     * @return array
+     */
+    public function monthlyExpansesPerDay()
+    {
+        $date = [];
+        $balance = [];
+
+        for ($i = 1; $i <= date('d'); $i++) {
+            array_push($balance, (self::dailyExpenses(date('Y-m-' . $i)) + end($balance)) );
+            array_push($date, date('m/' . ($i < 10 ? '0' . $i : $i)));
+        }
+
+        return ['date' => $date, 'balance' => $balance];
     }
 
     /**

@@ -1,9 +1,12 @@
 <?php
 
 use yii\helpers\Url;
-use kartik\dynagrid\DynaGrid;
-use kartik\grid\GridView;
+use app\assets\ChartAsset;
 use app\models\Transactions;
+use kartik\grid\GridView;
+use kartik\dynagrid\DynaGrid;
+
+ChartAsset::register($this);
 
 $this->title = 'Miesięczne zestawienie statystyk';
 
@@ -17,7 +20,7 @@ $this->title = 'Miesięczne zestawienie statystyk';
                 </div>
             </div>
             <div class="row mt-5 justify-content-md-center">
-                <div class="col-md-4 mr-3">
+                <div class="col-md-4">
                     <?= DynaGrid::widget([
                         'columns' => [
                             [
@@ -57,18 +60,21 @@ $this->title = 'Miesięczne zestawienie statystyk';
                         ],
                     ]); ?>
                 </div>
-                <div class="col-md-6" style="margin-top: 3%">
-                    <div class="row">
-                        <div class="col-md-8 statistic-text">Zalogowany użytkownik:</div>
+                <div class="col-md-8" style="margin-top: 3%">
+                    <div class="row ml-1">
+                        <div class="col-md-6 statistic-text">Zalogowany użytkownik:</div>
                         <h4><span class="badge user-label"><?= ucfirst(Yii::$app->user->identity->username) ?></span></h4>
                     </div>
-                    <div class="row">
-                        <div class="col-md-8 statistic-text">Suma wydatków w tym miesiącu:</div>
+                    <div class="row ml-1">
+                        <div class="col-md-6 statistic-text">Suma wydatków w tym miesiącu:</div>
                         <h4><span class="badge monthly-expenses-label"><?= Yii::$app->formatter->asDecimal(Transactions::monthlyExpenses()) ?> zł</span></h4>
                     </div>
-                    <div class="row">
-                        <div class="col-md-8 statistic-text">Ostatnia aktualizacja danych:</div>
+                    <div class="row ml-1">
+                        <div class="col-md-6 statistic-text">Ostatnia aktualizacja danych:</div>
                         <h4><span class="badge last-upload-label"><?= \app\models\User::lastUpload() ?></span></h4>
+                    </div>
+                    <div class="row mt-4">
+                        <canvas id="canvas" class="col-md-12"></canvas>
                     </div>
                 </div>
             </div>
@@ -81,3 +87,66 @@ $this->title = 'Miesięczne zestawienie statystyk';
         <?php endif; ?>
     </div>
 </div>
+
+<script type="text/javascript">
+    //config for chartJS
+    let balance = <?= json_encode(Transactions::monthlyExpansesPerDay()); ?>;
+    let config = {
+        type: 'line',
+        data: {
+            labels: balance.date,
+            datasets: [{
+                label: 'Bilans kosztów',
+                backgroundColor: '#ffc107',
+                borderColor: '#ffc107',
+                data: balance.balance,
+                fill: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Analiza przychodów i kosztów',
+                fontSize: 20,
+            },
+            tooltips: {
+                callbacks: {
+                    title: function (tooltipItem) {
+                        return 'Dzień: ' + tooltipItem['0']['xLabel'];
+                    },
+                    label: function (tooltipItem) {
+                        return 'Łączna suma: ' + tooltipItem['yLabel'] + ' zł';
+                    },
+                },
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Dzień'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Suma kosztów'
+                    }
+                }]
+            }
+        }
+    };
+
+    //draw chart in canvas field
+    window.onload = function () {
+        let ctx = document.getElementById('canvas').getContext('2d');
+        window.myLine = new Chart(ctx, config);
+    };
+</script>
