@@ -53,7 +53,6 @@ class TransactionsSearch extends Transactions
         $query->andFilterWhere([
             'id' => $this->id,
             'id_user' => $this->id_user,
-            'date' => $this->date,
             'created_at' => $this->created_at,
         ]);
 
@@ -62,6 +61,11 @@ class TransactionsSearch extends Transactions
             ->andFilterWhere(['like', 'name_recipient', $this->name_recipient])
             ->andFilterWhere(['like', 'transaction_detail', $this->transaction_detail])
             ->andFilterWhere(['like', 'amount', $this->amount]);
+
+        if (!is_null($this->date) && strpos($this->date, ' - ') !== false) {
+            list($dateRangeStart, $dateRangeEnd) = explode(' - ', $this->date);
+            $query->andFilterWhere(['between', 'date', $dateRangeStart, $dateRangeEnd]);
+        }
 
         return $dataProvider;
     }

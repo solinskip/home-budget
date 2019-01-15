@@ -234,7 +234,7 @@ h1 {
 }
 
 .month-statistic-grid table {
-    background-color: #16a085;
+    background-color: #66BB6A;
     color: #fff;
 }
 
@@ -251,7 +251,7 @@ h1 {
 }
 
 .subcategories-expand-grid table {
-    background-color: #16a085 !important;
+    background-color: #66BB6A !important;
     color: #fff;
 }
 
@@ -269,12 +269,13 @@ h1 {
 }
 
 .kv-expand-detail-row {
-    border-top: 2px solid #16a085 !important;
+    border-top: 2px solid #66BB6A !important;
 }
 
 .statistic-text {
+    padding-top: 4px;
     display: block;
-    font-size:  25px;
+    font-size:  22px;
     font-weight: 500;
     line-height: 1.2;
 }
@@ -291,4 +292,27 @@ h1 {
     color: #ffffff;
     font-size: 17px;
     font-weight: 500;
+}
+
+.kv-drp-dropdown input {
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+}
+
+.user-label, .monthly-expenses-label, .last-upload-label {
+    color: #fff;
+    width: 115px;
+    text-align: center;
+}
+
+.user-label {
+    background-color: #9CCC65;
+}
+
+.monthly-expenses-label {
+    background-color: #29B6F6;
+}
+
+.last-upload-label {
+    background-color: #78909C;
 }

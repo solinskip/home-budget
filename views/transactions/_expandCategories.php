@@ -13,7 +13,7 @@ use kartik\dynagrid\DynaGrid;
                     'label' => '',
                     'format' => 'raw',
                     'value' => function ($model) {
-                        return $model->name . ' <i class="fas fa-angle-double-right"></i> ' . Yii::$app->formatter->asDecimal(Transactions::expensesCategories($model->id), 2) . ' zł';
+                        return $model->name . ' <i class="fas fa-angle-double-right"></i> ' . Yii::$app->formatter->asDecimal(Transactions::expensesCategories($model->id, false), 2) . ' zł';
                     }
                 ],
             ],

@@ -7,6 +7,7 @@ use yii\db\ActiveRecord;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use kartik\editable\Editable;
+use kartik\grid\GridView;
 
 /**
  * This is the model class for table "transactions".
@@ -28,6 +29,8 @@ class Transactions extends ActiveRecord
     //virtual variables
     public $file;
     public $transactionsId;
+    public $dateRangeStart;
+    public $dateRangeEnd;
 
     public static function tableName()
     {
@@ -82,15 +85,15 @@ class Transactions extends ActiveRecord
         foreach ($data as $item) {
             if ($i >= 2) {
                 $date = explode('-', $item[0]);
-                strpos($item[4], 'BLIK') ? $amount = $item[8] : $amount = $item[5];
+                strpos($item[4], 'BLIK') ? $transactionDetail = 'Płatność BLIK' : $transactionDetail = $item[4];
 
                 $query = Transactions::find()->where([
                     'id_user' => $userId,
                     'date' => $date[2] . '-' . $date[1] . '-' . $date[0],
                     'name_sender' => $item[2],
                     'name_recipient' => $item[3],
-                    'transaction_detail' => $item[4],
-                    'amount' => $amount,
+                    'transaction_detail' => $transactionDetail,
+                    'amount' => $item[5],
                 ])->one();
 
                 if (empty($query)) {
@@ -100,8 +103,8 @@ class Transactions extends ActiveRecord
                     $model->date = $date[2] . '-' . $date[1] . '-' . $date[0];
                     $model->name_sender = $item[2];
                     $model->name_recipient = $item[3];
-                    $model->transaction_detail = $item[4];
-                    $model->amount = $amount;
+                    $model->transaction_detail = $transactionDetail;
+                    $model->amount = $item[5];
                     $model->save();
                     $insertData++;
                 }
@@ -147,23 +150,38 @@ class Transactions extends ActiveRecord
                 'width' => '20px',
                 'header' => Html::checkBox('selection_all', false, [
                     'class' => 'select-on-check-all',
-                    'label' => '*',
                 ]),
-                'vAlign' => 'top',
+                'vAlign' => 'middle',
                 'checkboxOptions' => function () {
                     return [
                         'class' => 'transactions-checkbox',
                     ];
                 },
             ],
-            ['class' => 'yii\grid\SerialColumn'],
-            'date',
+            [
+                'attribute' => 'date',
+                'filterType' => GridView::FILTER_DATE_RANGE,
+                'filterWidgetOptions' => ([
+                    'startAttribute' => 'dateRangeStart',
+                    'endAttribute' => 'dateRangeEnd',
+                    'presetDropdown' => true,
+                    'pluginOptions' => [
+                        'opens' => 'right',
+                        'locale' => [
+                            'format' => 'Y-MM-DD',
+                        ],
+                    ],
+                ]),
+                'vAlign' => 'middle',
+                'format' => 'raw',
+                'contentOptions' => ['style' => 'text-align:center'],
+            ],
             [
                 'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'category_id',
                 'value' => 'category.name',
                 'visible' => isset(Yii::$app->request->get()['category']) ? false : true,
-                'width' => '300px',
+                'width' => '160px',
                 'readonly' => isset(Yii::$app->request->get()['_toga9a4094b']) ? true : false,
                 'label' => 'Kategoria',
                 'editableOptions' => function () {
