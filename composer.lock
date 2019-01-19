@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f193d103f5d016d86ef9442d7aa8a028",
+    "content-hash": "7766d034f7881b4c8ccf0fcef3282af0",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -970,12 +970,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-grid.git",
-                "reference": "ba31324a365e638f12fe1ff0c1d106184b72c3ae"
+                "reference": "e8941a4e1e75dd80e097a029147c2ca2a4b8763f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/ba31324a365e638f12fe1ff0c1d106184b72c3ae",
-                "reference": "ba31324a365e638f12fe1ff0c1d106184b72c3ae",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/e8941a4e1e75dd80e097a029147c2ca2a4b8763f",
+                "reference": "e8941a4e1e75dd80e097a029147c2ca2a4b8763f",
                 "shasum": ""
             },
             "require": {
@@ -1014,7 +1014,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2019-01-02T10:22:28+00:00"
+            "time": "2019-01-10T11:58:14+00:00"
         },
         {
             "name": "kartik-v/yii2-helpers",
@@ -3059,16 +3059,16 @@
     "packages-dev": [
         {
             "name": "behat/gherkin",
-            "version": "v4.5.1",
+            "version": "v4.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Gherkin.git",
-                "reference": "74ac03d52c5e23ad8abd5c5cce4ab0e8dc1b530a"
+                "reference": "ab0a02ea14893860bca00f225f5621d351a3ad07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Gherkin/zipball/74ac03d52c5e23ad8abd5c5cce4ab0e8dc1b530a",
-                "reference": "74ac03d52c5e23ad8abd5c5cce4ab0e8dc1b530a",
+                "url": "https://api.github.com/repos/Behat/Gherkin/zipball/ab0a02ea14893860bca00f225f5621d351a3ad07",
+                "reference": "ab0a02ea14893860bca00f225f5621d351a3ad07",
                 "shasum": ""
             },
             "require": {
@@ -3076,8 +3076,8 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.5|~5",
-                "symfony/phpunit-bridge": "~2.7|~3",
-                "symfony/yaml": "~2.3|~3"
+                "symfony/phpunit-bridge": "~2.7|~3|~4",
+                "symfony/yaml": "~2.3|~3|~4"
             },
             "suggest": {
                 "symfony/yaml": "If you want to parse features, represented in YAML files"
@@ -3114,7 +3114,7 @@
                 "gherkin",
                 "parser"
             ],
-            "time": "2017-08-30T11:04:43+00:00"
+            "time": "2019-01-16T14:22:17+00:00"
         },
         {
             "name": "codeception/base",
@@ -3208,16 +3208,16 @@
         },
         {
             "name": "codeception/phpunit-wrapper",
-            "version": "7.6.0",
+            "version": "7.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/phpunit-wrapper.git",
-                "reference": "7c95e2022cbde2f013d52cc87ae878f1b996ed4d"
+                "reference": "ed4b12beb167dc2ecea293b4f6df6c20ce8d280f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/phpunit-wrapper/zipball/7c95e2022cbde2f013d52cc87ae878f1b996ed4d",
-                "reference": "7c95e2022cbde2f013d52cc87ae878f1b996ed4d",
+                "url": "https://api.github.com/repos/Codeception/phpunit-wrapper/zipball/ed4b12beb167dc2ecea293b4f6df6c20ce8d280f",
+                "reference": "ed4b12beb167dc2ecea293b4f6df6c20ce8d280f",
                 "shasum": ""
             },
             "require": {
@@ -3247,7 +3247,7 @@
                 }
             ],
             "description": "PHPUnit classes used by Codeception",
-            "time": "2018-12-31T10:33:06+00:00"
+            "time": "2019-01-13T10:34:39+00:00"
         },
         {
             "name": "codeception/specify",
@@ -4097,16 +4097,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.5.1",
+            "version": "7.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c23d78776ad415d5506e0679723cb461d71f488f"
+                "reference": "7c89093bd00f7d5ddf0ab81dee04f801416b4944"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c23d78776ad415d5506e0679723cb461d71f488f",
-                "reference": "c23d78776ad415d5506e0679723cb461d71f488f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7c89093bd00f7d5ddf0ab81dee04f801416b4944",
+                "reference": "7c89093bd00f7d5ddf0ab81dee04f801416b4944",
                 "shasum": ""
             },
             "require": {
@@ -4177,7 +4177,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-12-12T07:20:32+00:00"
+            "time": "2019-01-15T08:19:08+00:00"
         },
         {
             "name": "psr/http-message",

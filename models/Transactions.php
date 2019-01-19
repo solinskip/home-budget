@@ -84,7 +84,7 @@ class Transactions extends ActiveRecord
 
         foreach ($data as $item) {
             if ($i >= 2) {
-                $date = explode('-', $item[0]);
+                $date = explode('.', $item[0]);
                 strpos($item[4], 'BLIK') ? $transactionDetail = 'Płatność BLIK' : $transactionDetail = $item[4];
 
                 $query = Transactions::find()->where([
