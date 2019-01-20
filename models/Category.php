@@ -83,12 +83,6 @@ class Category extends \yii\db\ActiveRecord
                 },
                 'vAlign' => 'middle',
                 'hAlign' => 'center',
-                'filterType' => GridView::FILTER_SELECT2,
-                'filter' => ArrayHelper::map(Category::find()->where(['parent' => 0])->orderBy('name')->asArray()->all(), 'name', 'name'),
-                'filterWidgetOptions' => [
-                    'pluginOptions' => ['allowClear' => true],
-                ],
-                'filterInputOptions' => ['placeholder' => 'Kategoria'],
                 'width' => '180px',
                 'groupOddCssClass' => 'group-odd',
                 'groupEvenCssClass' => 'group-even',
@@ -105,7 +99,7 @@ class Category extends \yii\db\ActiveRecord
                 'filterWidgetOptions' => [
                     'pluginOptions' => ['allowClear' => true],
                 ],
-                'filterInputOptions' => ['placeholder' => 'Subkategoria'],
+                'filterInputOptions' => ['placeholder' => ''],
                 'width' => '180px',
             ],
             'description',

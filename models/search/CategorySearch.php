@@ -19,7 +19,7 @@ class CategorySearch extends Category
     {
         return [
             [['id', 'parent'], 'integer'],
-            [['category', 'subcategory', 'name', 'description', 'word_category'], 'safe'],
+            [['subcategory', 'name', 'description', 'word_category'], 'safe'],
         ];
     }
 
@@ -60,11 +60,6 @@ class CategorySearch extends Category
             'query' => $query,
         ]);
 
-        $dataProvider->sort->attributes['category'] = [
-            'asc' => ['name' => SORT_ASC],
-            'desc' => ['name' => SORT_DESC]
-        ];
-
         $dataProvider->sort->attributes['subcategory'] = [
             'asc' => ['name' => SORT_ASC],
             'desc' => ['name' => SORT_DESC]
@@ -84,8 +79,7 @@ class CategorySearch extends Category
             'parent' => $this->parent,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->category])
-            ->andFilterWhere(['like', 'name', $this->subcategory])
+        $query->andFilterWhere(['like', 'name', $this->subcategory])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'word_category', $this->word_category]);
         return $dataProvider;

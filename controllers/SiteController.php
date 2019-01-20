@@ -109,6 +109,16 @@ class SiteController extends Controller
     }
 
     /**
+     * Display error site when user operate on non-existent data or something goes wrong
+     *
+     * @return string
+     */
+    public function actionError()
+    {
+        return $this->render('error');
+    }
+
+    /**
      * @param $model
      * @return array|bool
      */

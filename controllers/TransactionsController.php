@@ -3,12 +3,12 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use yii\filters\VerbFilter;
-use app\models\User;
 use app\models\Transactions;
 use app\models\Category;
 use app\models\CsvImporter;
@@ -24,6 +24,15 @@ class TransactionsController extends Controller
                 'actions' => [
                     'delete' => ['post'],
                     'bulk-delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                            'roles' => ['@'],
+                    ],
                 ],
             ],
         ];

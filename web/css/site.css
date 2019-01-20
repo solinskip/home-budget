@@ -316,3 +316,8 @@ h1 {
 .last-upload-label {
     background-color: #78909C;
 }
+
+.select2-selection__clear {
+    top: 3px !important;
+    right: 30px !important;
+}

@@ -139,7 +139,7 @@ if (!Yii::$app->user->isGuest) :
                     display: true,
                     scaleLabel: {
                         display: true,
-                        labelString: 'Dzień'
+                        labelString: 'Dzień miesiąca'
                     }
                 }],
                 yAxes: [{
