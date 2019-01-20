@@ -1,1 +1,4 @@
-# Sklep internetowy
+# The home budget management apllication. 
+The home budget management application allows you to add transactions in two ways. The first one is to add transactions by importing from a .csv file, the second is to manually add transactions. When adding transactions via import from a file, transactions are automatically assigned to the category based on the key words in the transaction description. Keywords for a given category are assigned by the user in the "Categories" section. 
+
+In the main panel there is a monthly summary of expenses divided into categories and sub-categories and a graph showing the balance of expenses.

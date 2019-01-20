@@ -11,8 +11,8 @@ $this->title = 'Wgraj pliki';
     <div class="col-sm-12">
         <h1>Prześlij dane</h1>
         <p>Wybierz plik z transakcjami do wgrania na serwer, przyjmowane rozszerzenie pliku to <span
-                    class="badge badge-warning">.csv</span></p>
-        <p style="margin-top: -10px">Aplikacja posiada mechanizm zapobiegający dodaniu tej same transakcji dwa razy
+                    class="badge badge-warning">.csv</span> Przykładowy plik to importu znajdziesz <a href="<?= Yii::$app->request->baseUrl ?>/example.csv">tutaj.</a></p>
+        <p style="margin-top: -10px">Aplikacja automatyczne przyporządkuje transakcje do odpowiednich kategorii oraz zapobiegnie dodaniu tej same transakcji dwa razy
             <i class="fas fa-info-circle" style="font-size: 18px" data-toggle="tooltip" data-placement="right"
                title="Oznacza to, że użytkownik za każdym razem może podawać do eksportu ten sam plik, uzupełniony o nowe transakcje."></i></p>
         <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
