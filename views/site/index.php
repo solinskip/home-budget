@@ -5,6 +5,7 @@ use app\assets\ChartAsset;
 use app\models\Transactions;
 use kartik\grid\GridView;
 use kartik\dynagrid\DynaGrid;
+use kartik\daterange\DateRangePicker;
 
 ChartAsset::register($this);
 
@@ -16,7 +17,14 @@ $this->title = 'Miesięczne zestawienie statystyk';
             <?php if (!Yii::$app->user->isGuest) : ?>
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <div class="display-4">Zestawienie miesięcznych statystyk</div>
+                        <?php if (!Yii::$app->request->get('from')) : ?>
+                            <div class="display-4">Zestawienie miesięcznych statystyk</div>
+                        <?php else : ?>
+                            <div class="display-4">Okres zestawienia:
+                                <?php $dateRange = Transactions::getDateRange();
+                                echo $dateRange['from'] . ' do ' . $dateRange['to']; ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="row mt-5 justify-content-md-center">
@@ -37,7 +45,7 @@ $this->title = 'Miesięczne zestawienie statystyk';
                                     },
                                     'expandIcon' => '<i class="fas fa-angle-down"></i>',
                                     'collapseIcon' => '<i class="fas fa-angle-up"></i>',
-                                    'detailUrl' => Url::to(['/category/expand-category']),
+                                    'detailUrl' => Url::toRoute(['/transactions/expand-category', 'from' => Yii::$app->request->get('from'), 'to' => Yii::$app->request->get('to')]),
                                     'allowBatchToggle' => false,
                                     'width' => '30px',
                                 ],
@@ -68,7 +76,7 @@ $this->title = 'Miesięczne zestawienie statystyk';
                             </h4>
                         </div>
                         <div class="row ml-1">
-                            <div class="col-md-6 statistic-text">Suma wydatków w tym miesiącu:</div>
+                            <div class="col-md-6 statistic-text">Suma wydatków<?php if (!Yii::$app->request->get('from')) : ?> w tym miesiącu<?php endif;?>:</div>
                             <h4>
                                 <span class="badge monthly-expenses-label"><?= Yii::$app->formatter->asDecimal(Transactions::monthlyExpenses()) ?> zł</span>
                             </h4>
@@ -76,6 +84,27 @@ $this->title = 'Miesięczne zestawienie statystyk';
                         <div class="row ml-1">
                             <div class="col-md-6 statistic-text">Ostatnia aktualizacja danych:</div>
                             <h4><span class="badge last-upload-label"><?= \app\models\User::lastUpload() ?></span></h4>
+                        </div>
+                        <div class="row ml-1">
+                            <div class="col-md-6 statistic-text">Inny zakres daty:</div>
+                            <?= DateRangePicker::widget([
+                                'name' => 'date_range_transactions',
+                                'presetDropdown' => true,
+                                'value' => date('01-M-y') . ' do ' . date('d-M-y'),
+                                'convertFormat' => true,
+                                'pluginEvents' => [
+                                    'apply.daterangepicker' => 'function (ev, picker) { 
+                                        window.location.replace("index.php" + "?from=" + picker.startDate.format("Y-M-D") + "&to=" + picker.endDate.format("Y-M-D")); 
+                                    } ',
+                                ],
+                                'pluginOptions' => [
+                                    'locale' => [
+                                        'format' => 'd-M-y',
+                                        'separator' => ' do ',
+                                    ],
+                                    'opens' => 'left'
+                                ]
+                            ]); ?>
                         </div>
                         <div class="row mt-4">
                             <canvas id="canvas" class="col-md-12"></canvas>

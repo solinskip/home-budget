@@ -13,6 +13,7 @@ use app\models\Transactions;
 use app\models\Category;
 use app\models\CsvImporter;
 use app\models\search\TransactionsSearch;
+use app\models\search\CategorySearch;
 
 class TransactionsController extends Controller
 {
@@ -31,7 +32,7 @@ class TransactionsController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                            'roles' => ['@'],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -152,6 +153,29 @@ class TransactionsController extends Controller
         return $this->renderAjax('_form', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Expand row main category
+     *
+     * @return string
+     */
+    public function actionExpandCategory()
+    {
+        $request = Yii::$app->request;
+
+        //id selected category
+        $id = $request->post('expandRowKey');
+
+        if ($id) {
+            $searchModel = new CategorySearch();
+            $searchModel->parent = $id;
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->renderAjax('/transactions/_expandCategories', ['dataProvider' => $dataProvider]);
+        } else {
+            return 'Brak danych do wyświetlenia';
+        }
     }
 
     /**

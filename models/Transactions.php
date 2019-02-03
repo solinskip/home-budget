@@ -84,7 +84,7 @@ class Transactions extends ActiveRecord
 
         foreach ($data as $item) {
             if ($i >= 2) {
-                $date = explode('.', $item[0]);
+                $date = explode('-', $item[0]);
                 strpos($item[4], 'BLIK') ? $transactionDetail = 'Płatność BLIK' : $transactionDetail = $item[4];
 
                 $query = Transactions::find()->where([
@@ -271,10 +271,35 @@ class Transactions extends ActiveRecord
             $category = $subcategoriesIds;
         }
 
-        $amount = Transactions::find()->where(['>=', 'date', date('o-n-01')])->andWhere(['category_id' => $category])->andWhere(['id_user' => Yii::$app->user->id]);
-        $amount = round($amount->sum('amount'), 2);
+        $dateRange = self::getDateRange();
+
+        $amount = round(Transactions::find()
+            ->where(['between', 'date', $dateRange['from'], $dateRange['to']])
+            ->andWhere(['category_id' => $category])
+            ->andWhere(['id_user' => Yii::$app->user->id])
+            ->sum('amount'), 2);
 
         return $positive === true ? abs($amount) : $amount;
+    }
+
+    /**
+     * Get date range
+     * If date range isset in URL then use them
+     * else set start day on fist day of month and end day on current day
+     *
+     * @return array
+     */
+    public function getDateRange()
+    {
+        if (!empty($dateRange = Yii::$app->request->get())) {
+            $from = date('Y-m-d',strtotime($dateRange['from']));
+            $to = date('Y-m-d', strtotime($dateRange['to']));
+        } else {
+            $from = date('Y-m-01');
+            $to = date('Y-m-d');
+        }
+
+        return ['from' => $from, 'to' => $to];
     }
 
     /**
@@ -286,7 +311,10 @@ class Transactions extends ActiveRecord
      */
     public function dailyExpenses($date)
     {
-        $dailyExpenses = Transactions::find()->where(['id_user' => Yii::$app->user->id])->andWhere(['date' => $date])->sum('amount');
+        $dailyExpenses = Transactions::find()
+            ->where(['id_user' => Yii::$app->user->id])
+            ->andWhere(['date' => $date])
+            ->sum('amount');
 
         return $dailyExpenses ? $dailyExpenses * (-1) : 0;
     }
@@ -298,7 +326,14 @@ class Transactions extends ActiveRecord
      */
     public function monthlyExpenses()
     {
-        return abs(round(Transactions::find()->where(['id_user' => Yii::$app->user->id])->andWhere(['>=', 'date', date('o-n-01')])->sum('amount'), 2));
+        $dateRange = self::getDateRange();
+
+        return abs(round(Transactions::find()
+                ->where(['id_user' => Yii::$app->user->id])
+                ->andWhere(['between', 'date', $dateRange['from'], $dateRange['to']])
+                ->andWhere(['<', 'amount', 0])
+                ->sum('amount'), 2)
+        );
     }
 
     /**
@@ -310,10 +345,11 @@ class Transactions extends ActiveRecord
     {
         $date = [];
         $balance = [];
+        $dateRange = self::getDateRange();
 
-        for ($i = 1; $i <= date('d'); $i++) {
-            array_push($balance, (self::dailyExpenses(date('Y-m-' . $i)) + end($balance)) );
-            array_push($date, date('m/' . ($i < 10 ? '0' . $i : $i)));
+        for ($currentDay = $dateRange['from']; $currentDay <= $dateRange['to']; $currentDay = date('Y-m-d', strtotime('+1 day', strtotime($currentDay)))) {
+            array_push($balance, (self::dailyExpenses(date($currentDay)) + end($balance)));
+            array_push($date, date('m/d', strtotime($currentDay)));
         }
 
         return ['date' => $date, 'balance' => $balance];

@@ -143,29 +143,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Expand row main category
-     *
-     * @return string
-     */
-    public function actionExpandCategory()
-    {
-        $request = Yii::$app->request;
-
-        //id selected category
-        $id = $request->post('expandRowKey');
-
-        if ($id) {
-            $searchModel = new CategorySearch();
-            $searchModel->parent = $id;
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-            return $this->renderAjax('/transactions/_expandCategories', ['dataProvider' => $dataProvider]);
-        } else {
-            return 'Brak danych do wyświetlenia';
-        }
-    }
-
-    /**
      * Deletes an existing Category model
      *
      * @param $id integer
