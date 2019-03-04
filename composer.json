@@ -19,7 +19,7 @@
   },
   "minimum-stability": "stable",
   "require": {
-    "php": ">=7.0.3",
+    "php": ">=7.2",
     "yiisoft/yii2": "~2.0.13",
     "yiisoft/yii2-bootstrap": "~2.1.0@dev",
     "bower-asset/bootstrap": "~4.0.0@alpha",
@@ -40,7 +40,8 @@
     "kartik-v/yii2-widget-growl": "*",
     "kartik-v/yii2-widgets": "*",
     "kartik-v/yii2-editable": "dev-master",
-    "kartik-v/yii2-detail-view": "dev-master"
+    "kartik-v/yii2-detail-view": "dev-master",
+    "facebook/webdriver": "~1.0"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",
