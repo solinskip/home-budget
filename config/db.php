@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=budzet_domowy',
+    'dsn' => 'mysql:host=192.168.56.100;dbname=home_budget',
     'username' => 'root',
-    'password' => '',
+    'password' => '1234',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)

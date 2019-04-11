@@ -137,7 +137,7 @@ class Category extends \yii\db\ActiveRecord
      * @param bool $withSubcategories
      * @return array
      */
-    public function getCategories($withSubcategories = true)
+    public static function getCategories($withSubcategories = true)
     {
         $categoryList = [];
 

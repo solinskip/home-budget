@@ -1,4 +1,4 @@
-<?php
+<?
 
 namespace app\models;
 
@@ -45,8 +45,8 @@ class Transactions extends ActiveRecord
             [['date'], 'safe'],
             [['amount'], 'number'],
             [['name_sender', 'name_recipient', 'transaction_detail'], 'string', 'max' => 255],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
+            [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id_user' => 'id']],
             [['file'], 'file'],
 
             [['category_id'], 'required', 'message' => '{attribute} nie może pozostać bez wartości', 'on' => 'bulk-assign'],
@@ -123,9 +123,9 @@ class Transactions extends ActiveRecord
     /**
      * Checking if in sentence occurs word from array
      *
-     * @param string $word
+     * @param $word
      * @param $array
-     * @return |null
+     * @return array|null
      */
     public function in_array_stripos($word, $array)
     {
@@ -223,13 +223,13 @@ class Transactions extends ActiveRecord
                 'class' => 'kartik\grid\ActionColumn',
                 'header' => 'Akcje',
                 'dropdown' => false,
-                'urlCreator' => function ($action, $model, $key, $index) {
+                'urlCreator' => function ($action, $model, $key) {
                     return Url::to([$action, 'id' => $key]);
                 },
                 'template' => '{update} {delete}',
                 'buttons' => [
                     'update' => function ($url, $model) {
-                        return Html::a('<span class="fa fa-edit" style="color:#222d32;"></span>', false, ['value' => Url::to(['update', 'id' => $model->id]), 'class' => 'loadAjaxContent', 'style' => 'cursor: pointer', 'icon' => '<i class="fa fa-tasks"></i>', 'modaltitle' => 'Aktualizuj transakcje']);
+                        return Html::a('<span class="fa fa-edit" style="color:#222d32;"></span>', false, ['value' => $url, 'class' => 'loadAjaxContent', 'style' => 'cursor: pointer', 'icon' => '<i class="fa fa-tasks"></i>', 'modaltitle' => 'Aktualizuj transakcje']);
                     },
                     'delete' => function ($url, $model) {
                         return Html::a('<span class="fas fa-trash-alt" style="color:#222d32;"></span>', $url, ['data-pjax' => 0, 'title' => 'Usuń',
