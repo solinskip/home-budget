@@ -51,6 +51,7 @@ $this->title = 'Miesięczne zestawienie statystyk';
                                 ],
                             ],
                             'options' => ['class' => 'month-statistic-grid'],
+                            'allowPageSetting' => false,
                             'gridOptions' => [
                                 'dataProvider' => $dataProvider,
                                 'toolbar' => false,
