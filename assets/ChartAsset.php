@@ -1,4 +1,4 @@
-<?php
+<?
 
 namespace app\assets;
 

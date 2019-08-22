@@ -1,7 +1,12 @@
-<?php
+<?
 
 namespace app\controllers;
 
+use app\models\Category;
+use app\models\CsvImporter;
+use app\models\search\CategorySearch;
+use app\models\search\TransactionsSearch;
+use app\models\Transactions;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -9,11 +14,6 @@ use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use app\models\Transactions;
-use app\models\Category;
-use app\models\CsvImporter;
-use app\models\search\TransactionsSearch;
-use app\models\search\CategorySearch;
 
 class TransactionsController extends Controller
 {
@@ -21,14 +21,14 @@ class TransactionsController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                     'bulk-delete' => ['post'],
                 ],
             ],
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'allow' => true,

@@ -1,4 +1,4 @@
-<?php
+<?
 
 $this->title = 'Błąd serwera';
 

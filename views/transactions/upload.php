@@ -1,4 +1,4 @@
-<?php
+<?
 
 use yii\bootstrap\Html;
 use kartik\form\ActiveForm;
@@ -15,9 +15,9 @@ $this->title = 'Wgraj pliki';
         <p style="margin-top: -10px">Aplikacja automatyczne przyporządkuje transakcje do odpowiednich kategorii oraz zapobiegnie dodaniu tej same transakcji dwa razy
             <i class="fas fa-info-circle" style="font-size: 18px" data-toggle="tooltip" data-placement="right"
                title="Oznacza to, że użytkownik za każdym razem może podawać do eksportu ten sam plik, uzupełniony o nowe transakcje."></i></p>
-        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
+        <? $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 
-        <?= $form->field($model, 'file')->widget(FileInput::classname(), [
+        <?= $form->field($model, 'file')->widget(FileInput::class, [
             'options' => ['accept' => 'file/*'],
             'pluginOptions' => [
                 'allowedFileExtensions' => ['csv'],
@@ -35,7 +35,7 @@ $this->title = 'Wgraj pliki';
             <?= Html::submitButton('Wgraj dane', ['class' => 'btn modal-sub']) ?>
         </div>
 
-        <?php ActiveForm::end() ?>
+        <? ActiveForm::end() ?>
     </div>
 </div>
 <script type="text/javascript">

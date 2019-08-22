@@ -1,4 +1,4 @@
-<?php
+<?
 
 use kartik\datecontrol\Module;
 

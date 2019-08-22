@@ -362,7 +362,7 @@ class Transactions extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'id_user']);
+        return $this->hasOne(User::class, ['id' => 'id_user']);
     }
 
     /**
@@ -370,6 +370,6 @@ class Transactions extends ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasOne(Category::className(), ['id' => 'category_id']);
+        return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 }

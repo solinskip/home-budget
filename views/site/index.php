@@ -1,4 +1,4 @@
-<?php
+<?
 
 use yii\helpers\Url;
 use app\assets\ChartAsset;
@@ -14,17 +14,17 @@ $this->title = 'Miesięczne zestawienie statystyk';
 ?>
     <div class="site-index row">
         <div class="col-md-12">
-            <?php if (!Yii::$app->user->isGuest) : ?>
+            <? if (!Yii::$app->user->isGuest) : ?>
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <?php if (!Yii::$app->request->get('from')) : ?>
+                        <? if (!Yii::$app->request->get('from')) : ?>
                             <div class="display-4">Zestawienie miesięcznych statystyk</div>
-                        <?php else : ?>
+                        <? else : ?>
                             <div class="display-4">Okres zestawienia:
-                                <?php $dateRange = Transactions::getDateRange();
+                                <? $dateRange = Transactions::getDateRange();
                                 echo $dateRange['from'] . ' do ' . $dateRange['to']; ?>
                             </div>
-                        <?php endif; ?>
+                        <? endif; ?>
                     </div>
                 </div>
                 <div class="row mt-5 justify-content-md-center">
@@ -77,7 +77,7 @@ $this->title = 'Miesięczne zestawienie statystyk';
                             </h4>
                         </div>
                         <div class="row ml-1">
-                            <div class="col-md-6 statistic-text">Suma wydatków<?php if (!Yii::$app->request->get('from')) : ?> w tym miesiącu<?php endif;?>:</div>
+                            <div class="col-md-6 statistic-text">Suma wydatków<? if (!Yii::$app->request->get('from')) : ?> w tym miesiącu<? endif;?>:</div>
                             <h4>
                                 <span class="badge monthly-expenses-label"><?= Yii::$app->formatter->asDecimal(Transactions::monthlyExpenses()) ?> zł</span>
                             </h4>
@@ -112,7 +112,7 @@ $this->title = 'Miesięczne zestawienie statystyk';
                         </div>
                     </div>
                 </div>
-            <?php else : ?>
+            <? else : ?>
                 <div class="display-4 text-center">Witaj w aplikacji <span class="text-secondary"
                                                                            style="font-weight: 400">Budżet domowy</span>
                 </div>
@@ -120,10 +120,10 @@ $this->title = 'Miesięczne zestawienie statystyk';
                     <span class="badge badge-success">zaloguj się</span> lub <span
                             class="badge badge-info">zarejestruj</span>
                 </div>
-            <?php endif; ?>
+            <? endif; ?>
         </div>
     </div>
-<?php
+<?
 if (!Yii::$app->user->isGuest) :
     $balance = json_encode(Transactions::monthlyExpansesPerDay());
     $script = <<< JS

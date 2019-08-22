@@ -1,4 +1,4 @@
-<?php
+<?
 
 namespace app\models;
 
@@ -12,9 +12,6 @@ class Login extends Model
 
     private $_user;
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -23,9 +20,6 @@ class Login extends Model
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [

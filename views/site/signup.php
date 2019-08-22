@@ -1,4 +1,4 @@
-<?php
+<?
 
 use yii\helpers\Html;
 use kartik\form\ActiveForm;
@@ -9,9 +9,9 @@ use yii\widgets\Pjax;
 
 <div class="row singup-form ajax-form">
     <div class="col-sm-10 offset-1">
-        <?php Pjax::begin(['id' => 'form-signup-pjax']) ?>
+        <? Pjax::begin(['id' => 'form-signup-pjax']) ?>
 
-        <?php $form = ActiveForm::begin([
+        <? $form = ActiveForm::begin([
             'id' => 'form-signup',
             'enableAjaxValidation' => true,
             'validationUrl' => Url::to(['site/validate-form', 'model' => get_class($model)]),
@@ -26,8 +26,8 @@ use yii\widgets\Pjax;
 
         <?= Html::submitButton('Rejestracja', ['class' => 'btn float-right px-3 modal-sub']) ?>
 
-        <?php ActiveForm::end(); ?>
+        <? ActiveForm::end(); ?>
 
-        <?php Pjax::end() ?>
+        <? Pjax::end() ?>
     </div>
 </div>

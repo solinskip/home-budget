@@ -1,4 +1,4 @@
-<?php
+<?
 
 /* @var $this \yii\web\View */
 
@@ -15,7 +15,7 @@ use kartik\growl\Growl;
 AppAsset::register($this);
 ?>
 
-<?php $this->beginPage() ?>
+<? $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
@@ -25,10 +25,10 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <link rel='shortcut icon' href='<?= Yii::$app->request->baseUrl ?>/favicon.ico' type='image/x-icon' />
-    <?php $this->head() ?>
+    <? $this->head() ?>
 </head>
 <body>
-<?php $this->beginBody() ?>
+<? $this->beginBody() ?>
 
 <div class="wrap">
     <div class="position-fixed w-100" style="z-index: 1080">
@@ -113,7 +113,7 @@ AppAsset::register($this);
         </div>
 
         <section class="content">
-            <?php foreach (Yii::$app->session->getAllFlashes() as $message): ?>
+            <? foreach (Yii::$app->session->getAllFlashes() as $message): ?>
                 <?= Growl::widget([
                     'id' => 'growl',
                     'type' => (!empty($message['type'])) ? $message['type'] : 'danger',
@@ -131,7 +131,7 @@ AppAsset::register($this);
                     ]
                 ]);
                 ?>
-            <?php endforeach; ?>
+            <? endforeach; ?>
         </section>
         <!--Alerts Container end-->
 
@@ -140,7 +140,7 @@ AppAsset::register($this);
         <!--Main content render end-->
 
         <!-- Utilities -->
-        <?php Modal::begin([
+        <? Modal::begin([
             'options' => [
                 'tabindex' => false,
                 'class' => 'py-5 my-5',
@@ -155,11 +155,11 @@ AppAsset::register($this);
 
         <div class="modalAjaxContent"></div>
 
-        <?php Modal::end(); ?>
+        <? Modal::end(); ?>
         <!-- Utilities END-->
     </div>
 </div>
-<?php $this->endBody() ?>
+<? $this->endBody() ?>
 </body>
 </html>
-<?php $this->endPage() ?>
+<? $this->endPage() ?>

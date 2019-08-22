@@ -1,4 +1,4 @@
-<?php
+<?
 
 use yii\helpers\Html;
 use kartik\form\ActiveForm;
@@ -10,12 +10,12 @@ use app\models\Category;
 ?>
 
 <div class="category-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <? $form = ActiveForm::begin(); ?>
 
-    <?php if (Yii::$app->request->get()['type'] == 'category') : ?>
+    <? if (Yii::$app->request->get()['type'] == 'category') : ?>
         <?= $form->field($model, 'category')->textInput(['maxlength' => true]) ?>
-    <?php else : ?>
-        <?= $form->field($model, 'category')->widget(\kartik\select2\Select2::className(), [
+    <? else : ?>
+        <?= $form->field($model, 'category')->widget(\kartik\select2\Select2::class, [
             'data' => Category::getCategories(false),
             'options' => ['placeholder' => 'Wybierz kategorie'],
             'pluginOptions' => [
@@ -24,7 +24,7 @@ use app\models\Category;
         ]) ?>
         <?= $form->field($model, 'subcategory')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'word_category')->textInput(['maxlength' => true]) ?>
-    <?php endif; ?>
+    <? endif; ?>
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
@@ -32,5 +32,5 @@ use app\models\Category;
         <?= Html::submitButton('Zapisz', ['class' => 'btn float-right px-3 modal-sub']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <? ActiveForm::end(); ?>
 </div>

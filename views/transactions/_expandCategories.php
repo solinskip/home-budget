@@ -1,4 +1,4 @@
-<?php
+<?
 
 use app\models\Transactions;
 use kartik\dynagrid\DynaGrid;

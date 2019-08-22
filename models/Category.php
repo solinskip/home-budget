@@ -1,4 +1,4 @@
-<?php
+<?
 
 namespace app\models;
 
@@ -22,17 +22,11 @@ class Category extends \yii\db\ActiveRecord
     public $category;
     public $subcategory;
 
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'category';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [

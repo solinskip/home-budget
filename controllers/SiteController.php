@@ -1,26 +1,23 @@
-<?php
+<?
 
 namespace app\controllers;
 
-use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\web\Response;
-use yii\filters\VerbFilter;
-use app\models\Signup;
 use app\models\Login;
 use app\models\search\CategorySearch;
+use app\models\Signup;
+use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\Response;
 
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['logout'],
                 'rules' => [
                     [
@@ -31,7 +28,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -55,8 +52,8 @@ class SiteController extends Controller
     }
 
     /**
-     * Creates a new Signup model.
-     * @return mixed
+     * @return string|Response
+     * @throws \yii\base\Exception
      */
     public function actionSignup()
     {

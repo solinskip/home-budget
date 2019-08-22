@@ -1,4 +1,4 @@
-<?php
+<?
 
 use yii\helpers\Html;
 use kartik\form\ActiveForm;
@@ -10,9 +10,9 @@ use kartik\datecontrol\DateControl;
 ?>
 
 <div class="transactions-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <? $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'date')->widget(DateControl::classname(), [
+    <?= $form->field($model, 'date')->widget(DateControl::class, [
         'type' => DateControl::FORMAT_DATE,
         'ajaxConversion' => false,
         'widgetOptions' => [
@@ -30,5 +30,5 @@ use kartik\datecontrol\DateControl;
         <?= Html::submitButton($model->isNewRecord ? 'Zapisz' : 'Aktualizuj', ['class' => 'btn float-right px-3 modal-sub']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <? ActiveForm::end(); ?>
 </div>

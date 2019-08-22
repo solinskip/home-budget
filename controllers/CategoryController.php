@@ -1,12 +1,12 @@
-<?php
+<?
 
 namespace app\controllers;
 
+use app\models\Category;
+use app\models\search\CategorySearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use app\models\Category;
-use app\models\search\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -22,13 +22,13 @@ class CategoryController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'allow' => true,
@@ -93,11 +93,8 @@ class CategoryController extends Controller
 
 
     /**
-     * Updates an existing Category model.
-     * Depends of argument type assign value
-     *
-     * @param $id integer
-     * @param $type string(category or subcategory)
+     * @param integer $id
+     * @param string $type, category or subcategory
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException
      * @throws \Throwable
@@ -146,6 +143,7 @@ class CategoryController extends Controller
      * Deletes an existing Category model
      *
      * @param $id integer
+     * @param string $type, category or subcategory
      * @return \yii\web\Response
      * @throws NotFoundHttpException
      * @throws \Throwable
